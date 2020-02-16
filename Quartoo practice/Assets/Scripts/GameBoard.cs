@@ -29,6 +29,9 @@ public class GameBoard : MonoBehaviour
         if (selectedPiece != null)
         {
             Vector3 newPosition = button.transform.position;
+            newPosition.z += 15;
+            newPosition.y += 5;
+            Debug.Log(newPosition);
             selectedPiece.transform.position = newPosition;
             SetGamePieceAtrributes(selectedPiece);
             gameController.AddToUsedPieces(selectedPiece);
