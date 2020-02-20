@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     private int playerTurn;
     private int moveCount;
 
-    void SetGameControllerReferenceOnButtons()
+    void SetGameControllerReferenceOnGamePieces()
     {
         for (int i = 0; i < buttonList.Length; i++)
         {
@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-        SetGameControllerReferenceOnButtons();
+        SetGameControllerReferenceOnGamePieces();
         playerTurn = 1;
         moveCount = 0;
     }
@@ -36,6 +36,8 @@ public class GameController : MonoBehaviour
             selectedPiece.transform.position = newPosition;
             recentMove = button;
             button.interactable = false;
+            changeSides();
+            Debug.Log(playerTurn);
             // if this is true, game is over
             if (gameCore.SetPiece(selectedPiece.name, button.name))
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameCore : MonoBehaviour
 {
-    private GameController gameController;
+    //private GameController gameController;
     private int row = 1;
     private int col = 0;
     public struct Piece
@@ -35,6 +35,7 @@ public class GameCore : MonoBehaviour
 
     // usedPieces is empty until a game piece is set
     public List<Piece> usedPieces = new List<Piece>();
+  
     // initialize availablePieces (it will include all game pieces until the first move)
     public List<Piece> availablePieces = new List<Piece>()
     {
@@ -58,11 +59,6 @@ public class GameCore : MonoBehaviour
         new Piece(1, 1, 1, 0, "D3"),
         new Piece(1, 1, 1, 1, "D4")
     };
-
-    public void SetGameControllerReference(GameController controller)
-    {
-        gameController = controller;
-    }
 
     public bool SetPiece(string gamePieceID, string position)
     {
