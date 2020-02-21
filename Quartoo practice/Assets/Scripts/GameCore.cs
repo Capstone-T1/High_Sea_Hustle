@@ -109,7 +109,6 @@ public class GameCore : MonoBehaviour
     {
         BoardSpace convertedBoardSpace = new BoardSpace();
         string subStringPosition = position.Substring(12);
-        Debug.Log(subStringPosition);
 
         foreach (BoardSpace space in availableBoardSpaces)
         {
