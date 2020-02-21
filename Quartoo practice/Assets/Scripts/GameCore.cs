@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameCore : MonoBehaviour
 {
-    //private GameController gameController;
     public struct Piece
     {
         public int height;
@@ -36,7 +35,7 @@ public class GameCore : MonoBehaviour
         }
     }
 
-    // initialize GameBoard with empty slots
+    // Initialize GameBoard with empty slots
     public Piece[][] gameBoard = new Piece[4][] {
             new Piece[] {new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, "")},
             new Piece[] {new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, "")},
@@ -44,10 +43,10 @@ public class GameCore : MonoBehaviour
             new Piece[] {new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, "") }
     };
 
-    // usedPieces is empty until a game piece is set
+    // UsedPieces is empty until a game piece is set
     public List<Piece> usedPieces = new List<Piece>();
   
-    // initialize availablePieces (it will include all game pieces until the first move)
+    // Initialize availablePieces (it will include all game pieces until the first move)
     public List<Piece> availablePieces = new List<Piece>()
     {
         // Gold Pieces
@@ -71,6 +70,7 @@ public class GameCore : MonoBehaviour
         new Piece(1, 1, 1, 1, "D4")
     };
 
+    // Initialize availableBoardSpaces for the ai to use and calculate a move
     public List<BoardSpace> availableBoardSpaces = new List<BoardSpace>()
     {
         new BoardSpace("A1", 0, 0),
@@ -103,22 +103,22 @@ public class GameCore : MonoBehaviour
         return (EndTurn() ? true : false);
     }
 
-    // Check a substring of position, and set row/col to the correct values that correspond
-    // with the gridspaces in unity
+    // Check a substring of position (the id of the button in unity), and return 
+    // the corresponding BoardSpace in availableBoardSpaces
     private BoardSpace ConvertPosition(string position)
     {
         BoardSpace convertedBoardSpace = new BoardSpace();
         string subStringPosition = position.Substring(12);
 
-        foreach (BoardSpace space in availableBoardSpaces)
-        {
+        foreach (BoardSpace space in availableBoardSpaces) 
             if (subStringPosition == space.id)
-                convertedBoardSpace = space;
-        }
-        // remove col and rows
+                convertedBoardSpace = space; 
+
         return convertedBoardSpace;
     }
 
+    // Check a substring of gamePiece (the id of the gamepiece in unity), and return 
+    // the corresponding Piece in availablePieces
     private Piece ConvertGamePiece(string gamePiece)
     {
         Piece convertedGamePiece = new Piece();
