@@ -22,7 +22,6 @@ public class AIv1 : MonoBehaviour
     public string choosePosition(List<GameCore.BoardSpace> availableBoardSpaces)
     {
         int numOfAvailablePositions = availableBoardSpaces.Count;
-        Debug.Log(availableBoardSpaces.Count);
         System.Random rand = new System.Random();
         int option = rand.Next(numOfAvailablePositions);
         string chosenPosition = availableBoardSpaces[option].id;
