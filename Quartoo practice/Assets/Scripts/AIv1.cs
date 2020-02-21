@@ -6,22 +6,27 @@ using UnityEngine.UI;
 
 public class AIv1 : MonoBehaviour
 {
-    //private GameController gameController;
+    //Unity's Phase 1 for AI
+    public string chooseGamePiece(List<GameCore.Piece> availablePieces)
+    {
+        int numOfAvailablePieces = availablePieces.Count;
 
-    //Unity's getMove for AI
-    //public void getMove(char[] arr)
-    //{
-    //    List<GamePiece> availablePieces = gameController.availablePieces;
-    //    int numOfAvailablePieces = availablePieces.Count;
+        System.Random rand = new System.Random();
+        int option = rand.Next(numOfAvailablePieces);
+        string chosenMove = availablePieces[option].id;
 
-    //    System.Random rand = new System.Random();
-    //    int option = rand.Next(numOfAvailablePieces);
-    //    GamePiece chosenMove = availablePieces[option];
+        return chosenMove;
+    }
 
-    //    gameController.SetSelectedPiece(chosenMove);
-    //}
+    // Unity's Phase 2 for AI
+    public string choosePosition(List<GameCore.BoardSpace> availableBoardSpaces)
+    {
+        int numOfAvailablePositions = availableBoardSpaces.Count;
+        Debug.Log(availableBoardSpaces.Count);
+        System.Random rand = new System.Random();
+        int option = rand.Next(numOfAvailablePositions);
+        string chosenPosition = availableBoardSpaces[option].id;
 
-
-    //Button[] buttonList;
-
+        return chosenPosition;
+    }
 }

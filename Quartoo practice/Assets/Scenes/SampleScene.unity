@@ -1227,7 +1227,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (5)
+      value: Board Space B2
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -1408,7 +1408,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (14)
+      value: Board Space D3
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -2004,7 +2004,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (6)
+      value: Board Space B3
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -2191,7 +2191,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (15)
+      value: Board Space D4
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -2861,7 +2861,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (10)
+      value: Board Space C3
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -3270,7 +3270,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (12)
+      value: Board Space D1
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -3433,7 +3433,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (3)
+      value: Board Space A4
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -4029,7 +4029,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (7)
+      value: Board Space B4
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -4673,7 +4673,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (4)
+      value: Board Space B1
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -4848,7 +4848,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (9)
+      value: Board Space C2
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -5023,7 +5023,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (1)
+      value: Board Space A2
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -5500,7 +5500,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (2)
+      value: Board Space A3
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -5784,7 +5784,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (13)
+      value: Board Space D2
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -6336,7 +6336,7 @@ PrefabInstance:
     - target: {fileID: 9146775076226727656, guid: 8cc87937eabcc104bba7ed2842a255f6,
         type: 3}
       propertyPath: m_Name
-      value: GamePiece
+      value: GamePiece A1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cc87937eabcc104bba7ed2842a255f6, type: 3}
@@ -6996,7 +6996,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (8)
+      value: Board Space C1
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -7171,7 +7171,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space (11)
+      value: Board Space C4
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
@@ -7639,7 +7639,7 @@ PrefabInstance:
     - target: {fileID: 1196519263992867348, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
       propertyPath: m_Name
-      value: Grid Space
+      value: Board Space A1
       objectReference: {fileID: 0}
     - target: {fileID: 1196519263992867349, guid: 363b07037f5609f489f33ba8ce093c57,
         type: 3}
