@@ -5,8 +5,6 @@ using UnityEngine;
 public class GameCore : MonoBehaviour
 {
     //private GameController gameController;
-    private int row = 1;
-    private int col = 0;
     public struct Piece
     {
         public int height;
@@ -22,6 +20,19 @@ public class GameCore : MonoBehaviour
             this.type = type;
             this.emblem = emblem;
             this.id = id;
+        }
+    }
+    public struct BoardSpace
+    {
+        public string id;
+        public int row;
+        public int col;
+
+        public BoardSpace (string id, int row, int col)
+        {
+            this.id = id;
+            this.row = row;
+            this.col = col;
         }
     }
 
@@ -60,101 +71,60 @@ public class GameCore : MonoBehaviour
         new Piece(1, 1, 1, 1, "D4")
     };
 
+    public List<BoardSpace> availableBoardSpaces = new List<BoardSpace>()
+    {
+        new BoardSpace("A1", 0, 0),
+        new BoardSpace("A2", 0, 1),
+        new BoardSpace("A3", 0, 2),
+        new BoardSpace("A4", 0, 3),
+        new BoardSpace("B1", 1, 0),
+        new BoardSpace("B2", 1, 1),
+        new BoardSpace("B3", 1, 2),
+        new BoardSpace("B4", 1, 3),
+        new BoardSpace("C1", 2, 0),
+        new BoardSpace("C2", 2, 1),
+        new BoardSpace("C3", 2, 2),
+        new BoardSpace("C4", 2, 3),
+        new BoardSpace("D1", 3, 0),
+        new BoardSpace("D2", 3, 1),
+        new BoardSpace("D3", 3, 2),
+        new BoardSpace("D4", 3, 3),
+    };
+
     public bool SetPiece(string gamePieceID, string position)
     {
-        // updates variables row and col
-        ConvertPosition(position);
-
+        BoardSpace convertedBoardSpace = ConvertPosition(position);
         Piece convertedGamepiece = ConvertGamePiece(gamePieceID);
+
         usedPieces.Add(convertedGamepiece);
         availablePieces.Remove(convertedGamepiece);
-        gameBoard[row][col] = convertedGamepiece;
+        availableBoardSpaces.Remove(convertedBoardSpace);
+        gameBoard[convertedBoardSpace.row][convertedBoardSpace.col] = convertedGamepiece;
         return (EndTurn() ? true : false);
     }
 
     // Check a substring of position, and set row/col to the correct values that correspond
     // with the gridspaces in unity
-    private void ConvertPosition(string position)
+    private BoardSpace ConvertPosition(string position)
     {
-        try
-        {
-            string subStringPosition = position.Substring(11);
+        BoardSpace convertedBoardSpace = new BoardSpace();
+        string subStringPosition = position.Substring(12);
+        Debug.Log(subStringPosition);
 
-            switch (subStringPosition)
-            {
-                case "(1)":
-                    row = 0;
-                    col = 1;
-                    break;
-                case "(2)":
-                    row = 0;
-                    col = 2;
-                    break;
-                case "(3)":
-                    row = 0;
-                    col = 3;
-                    break;
-                case "(4)":
-                    row = 1;
-                    col = 0;
-                    break;
-                case "(5)":
-                    row = 1;
-                    col = 1;
-                    break;
-                case "(6)":
-                    row = 1;
-                    col = 2;
-                    break;
-                case "(7)":
-                    row = 1;
-                    col = 3;
-                    break;
-                case "(8)":
-                    row = 2;
-                    col = 0;
-                    break;
-                case "(9)":
-                    row = 2;
-                    col = 1;
-                    break;
-                case "(10)":
-                    row = 2;
-                    col = 2;
-                    break;
-                case "(11)":
-                    row = 2;
-                    col = 3;
-                    break;
-                case "(12)":
-                    row = 3;
-                    col = 0;
-                    break;
-                case "(13)":
-                    row = 3;
-                    col = 1;
-                    break;
-                case "(14)":
-                    row = 3;
-                    col = 2;
-                    break;
-                case "(15)":
-                    row = 3;
-                    col = 3;
-                    break;
-            }
-        }
-        catch
+        foreach (BoardSpace space in availableBoardSpaces)
         {
-            row = 0;
-            col = 0;
+            if (subStringPosition == space.id)
+                convertedBoardSpace = space;
         }
+        // remove col and rows
+        return convertedBoardSpace;
     }
 
     private Piece ConvertGamePiece(string gamePiece)
     {
         Piece convertedGamePiece = new Piece();
         string subStringPiece = gamePiece.Substring(10);
+
         foreach (Piece piece in availablePieces)
             if (subStringPiece == piece.id)
                 convertedGamePiece = piece;

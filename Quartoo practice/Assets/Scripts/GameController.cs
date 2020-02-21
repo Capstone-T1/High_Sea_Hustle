@@ -7,11 +7,19 @@ public class GameController : MonoBehaviour
 {
     public List<GamePiece> gamePieces;
     private GameCore gameCore = new GameCore();
+    AIv1 aiController = new AIv1();
     public Button[] buttonList;
     public GamePiece selectedPiece;
     public Button recentMove;
     private int playerTurn;
     private int moveCount;
+
+    void Awake()
+    {
+        SetGameControllerReferenceOnGamePieces();
+        playerTurn = 1;
+        moveCount = 0;
+    }
 
     void SetGameControllerReferenceOnGamePieces()
     {
@@ -19,13 +27,6 @@ public class GameController : MonoBehaviour
         {
             gamePieces[i].GetComponent<GamePiece>().SetGameControllerReference(this);
         }
-    }
-
-    void Awake()
-    {
-        SetGameControllerReferenceOnGamePieces();
-        playerTurn = 1;
-        moveCount = 0;
     }
 
     public void SetPiece(Button button)
@@ -37,19 +38,42 @@ public class GameController : MonoBehaviour
             recentMove = button;
             button.interactable = false;
             changeSides();
-            Debug.Log(playerTurn);
             // if this is true, game is over
             if (gameCore.SetPiece(selectedPiece.name, button.name))
             {
                 GameOver();
             }
             selectedPiece = null;
+
+            //AI stuff currently fills the entire board after a human move
+            //string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
+            //ConvertAIPiece(aiPieceChosen);
+            //string aiBoardSpaceChosen = aiController.choosePosition(gameCore.availableBoardSpaces);
+            //Button boardSpace = ConvertBoardSpace(aiBoardSpaceChosen);
+            //SetPiece(boardSpace);
         }
     }
 
     public void SetSelectedPiece(GamePiece gamePiece)
     {
         selectedPiece = gamePiece;
+    }
+
+    public List<GameCore.Piece> GetAvailablePieces()
+    {
+        return gameCore.availablePieces;
+    }
+
+    public void ConvertAIPiece(string aiPieceChosen)
+    {
+        string gamePieceString = "GamePiece " + aiPieceChosen;
+        SetSelectedPiece(GameObject.Find(gamePieceString).GetComponent<GamePiece>());
+    }
+
+    public Button ConvertBoardSpace(string aiBoardSpaceChosen)
+    {
+        string boardSpaceString = "Board Space " + aiBoardSpaceChosen;
+        return GameObject.Find(boardSpaceString).GetComponent<Button>();
     }
 
     public void EndTurn()
