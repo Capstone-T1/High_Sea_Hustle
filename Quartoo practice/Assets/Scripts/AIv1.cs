@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +9,7 @@ public class AIv1 : MonoBehaviour
     public string chooseGamePiece(List<GameCore.Piece> availablePieces)
     {
         int numOfAvailablePieces = availablePieces.Count;
-
-        System.Random rand = new System.Random();
-        int option = rand.Next(numOfAvailablePieces);
+        int option = Random.Range(0, numOfAvailablePieces);
         string chosenMove = availablePieces[option].id;
 
         return chosenMove;
@@ -22,9 +19,7 @@ public class AIv1 : MonoBehaviour
     public string choosePosition(List<GameCore.BoardSpace> availableBoardSpaces)
     {
         int numOfAvailablePositions = availableBoardSpaces.Count;
-        Debug.Log(availableBoardSpaces.Count);
-        System.Random rand = new System.Random();
-        int option = rand.Next(numOfAvailablePositions);
+        int option = Random.Range(0, numOfAvailablePositions);
         string chosenPosition = availableBoardSpaces[option].id;
 
         return chosenPosition;

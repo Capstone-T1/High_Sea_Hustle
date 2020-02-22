@@ -12,13 +12,31 @@ public class GameController : MonoBehaviour
     public GamePiece selectedPiece;
     public Button recentMove;
     private int playerTurn;
-    private int moveCount;
 
     void Awake()
     {
         SetGameControllerReferenceOnGamePieces();
         playerTurn = 1;
-        moveCount = 0;
+    }
+
+    void EasyAIGame()
+    {
+        // Player's turn
+        if (playerTurn == 1)
+        {
+            EnableUserInput();
+            //Make everything interactable
+        }
+        // AI's turn
+        else
+        {
+            DisableUserInput();
+            string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
+            ConvertAIPiece(aiPieceChosen);
+            string aiBoardSpaceChosen = aiController.choosePosition(gameCore.availableBoardSpaces);
+            Button boardSpace = ConvertBoardSpace(aiBoardSpaceChosen);
+            StartCoroutine("DelayAIMove", boardSpace);
+        }
     }
 
     void SetGameControllerReferenceOnGamePieces()
@@ -29,6 +47,30 @@ public class GameController : MonoBehaviour
         }
     }
 
+    // Coroutine that waits a certain amount of time before the ai sets a piece
+    IEnumerator DelayAIMove(Button boardSpace)
+    {
+        yield return new WaitForSeconds(3);
+        SetPiece(boardSpace);
+    }
+
+    public void DisableUserInput()
+    {
+        foreach (Button button in buttonList)
+            button.interactable = false;
+    }
+
+    public void EnableUserInput()
+    {
+        foreach (GameCore.BoardSpace availableButton in gameCore.availableBoardSpaces)
+            foreach (Button button in buttonList)
+                if (availableButton.id == button.name.Substring(12))
+                {
+                    button.interactable = true;
+                    break;
+                }
+    }
+
     public void SetPiece(Button button)
     {
         if (selectedPiece != null)
@@ -37,20 +79,12 @@ public class GameController : MonoBehaviour
             selectedPiece.transform.position = newPosition;
             recentMove = button;
             button.interactable = false;
-            changeSides();
-            // if this is true, game is over
-            if (gameCore.SetPiece(selectedPiece.name, button.name))
-            {
-                GameOver();
-            }
-            selectedPiece = null;
 
-            //AI stuff currently fills the entire board after a human move
-            //string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
-            //ConvertAIPiece(aiPieceChosen);
-            //string aiBoardSpaceChosen = aiController.choosePosition(gameCore.availableBoardSpaces);
-            //Button boardSpace = ConvertBoardSpace(aiBoardSpaceChosen);
-            //SetPiece(boardSpace);
+            // if this is true, game is over
+            if (gameCore.SetPiece(selectedPiece.name, button.name)) 
+                GameOver();
+            else
+                EndTurn();
         }
     }
 
@@ -78,7 +112,9 @@ public class GameController : MonoBehaviour
 
     public void EndTurn()
     {
-        changeSides();
+        selectedPiece = null;
+        ChangeSides();
+        EasyAIGame();
     }
 
     void GameOver()
@@ -86,7 +122,7 @@ public class GameController : MonoBehaviour
         SetBoardInteractable(false);
     }
 
-    void changeSides()
+    void ChangeSides()
     {
         playerTurn = (playerTurn == 1) ? 2 : 1;
     }
