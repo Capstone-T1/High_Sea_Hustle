@@ -25,12 +25,13 @@ public class GameController : MonoBehaviour
         // Player's turn
         if (playerTurn == 1)
         {
+            EnableUserInput();
             //Make everything interactable
         }
         // AI's turn
         else
         {
-            //Prevent the user from clicking gamepieces or boardspaces
+            DisableUserInput();
             string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
             ConvertAIPiece(aiPieceChosen);
             string aiBoardSpaceChosen = aiController.choosePosition(gameCore.availableBoardSpaces);
@@ -52,6 +53,23 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         SetPiece(boardSpace);
+    }
+
+    public void DisableUserInput()
+    {
+        foreach (Button button in buttonList)
+            button.interactable = false;
+    }
+
+    public void EnableUserInput()
+    {
+        foreach (GameCore.BoardSpace availableButton in gameCore.availableBoardSpaces)
+            foreach (Button button in buttonList)
+                if (availableButton.id == button.name.Substring(12))
+                {
+                    button.interactable = true;
+                    break;
+                }
     }
 
     public void SetPiece(Button button)
