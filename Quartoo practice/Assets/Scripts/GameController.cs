@@ -12,7 +12,6 @@ public class GameController : MonoBehaviour
     public GamePiece selectedPiece;
     public Button recentMove;
     private int playerTurn;
-    private bool isGameOVer = false;
 
     void Awake()
     {
@@ -84,8 +83,8 @@ public class GameController : MonoBehaviour
             // if this is true, game is over
             if (gameCore.SetPiece(selectedPiece.name, button.name)) 
                 GameOver();
-
-            EndTurn();
+            else
+                EndTurn();
         }
     }
 
@@ -120,7 +119,6 @@ public class GameController : MonoBehaviour
 
     void GameOver()
     {
-        isGameOVer = true;
         SetBoardInteractable(false);
     }
 
