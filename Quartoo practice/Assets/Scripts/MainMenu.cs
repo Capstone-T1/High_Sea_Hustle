@@ -21,6 +21,17 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("GameLobby");
     }
 
+    public void storyGame()
+    {
+        SceneManager.LoadScene("StoryMode");
+    }
+
+    public void settings()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+
+
     public void showHelpPanel()
     {
         helpPanel.SetActive(true);

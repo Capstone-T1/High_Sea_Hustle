@@ -79,6 +79,7 @@ public class GameController : MonoBehaviour
             selectedPiece.transform.position = newPosition;
             recentMove = button;
             button.interactable = false;
+            //selectedPiece.interactable = false;
 
             // if this is true, game is over
             if (gameCore.SetPiece(selectedPiece.name, button.name)) 
