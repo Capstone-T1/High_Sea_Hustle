@@ -5,49 +5,87 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public Button[] buttonList;
     public List<GamePiece> gamePieces;
-    public List<GamePiece> usedPieces;
-    public List<GamePiece> availablePieces;
+    private GameCore gameCore = new GameCore();
+    AIv1 aiController = new AIv1();
+    public Button[] buttonList;
     public GamePiece selectedPiece;
     public Button recentMove;
-    private string playerSide;
-    private int moveCount;
-
-    void SetGameControllerReferenceOnButtons()
-    {
-        for (int i = 0; i < buttonList.Length; i++)
-        {
-            buttonList[i].GetComponent<GameBoard>().SetGameControllerReference(this);
-            availablePieces[i].GetComponent<GamePiece>().SetGameControllerReference(this);
-        }
-    }
-
-    void SetGameControllerReferenceOnUsedPiece()
-    {
-        usedPieces[usedPieces.Count - 1].GetComponent<GamePiece>().SetGameControllerReference(this);
-    }
+    private int playerTurn;
 
     void Awake()
     {
-        SetGameControllerReferenceOnButtons();
-        playerSide = "X";
-        moveCount = 0;
+        SetGameControllerReferenceOnGamePieces();
+        playerTurn = 1;
     }
 
-    public void SetRecentMove(Button button)
+    void EasyAIGame()
     {
-        recentMove = button;
+        // Player's turn
+        if (playerTurn == 1)
+        {
+            EnableUserInput();
+            //Make everything interactable
+        }
+        // AI's turn
+        else
+        {
+            DisableUserInput();
+            string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
+            ConvertAIPiece(aiPieceChosen);
+            string aiBoardSpaceChosen = aiController.choosePosition(gameCore.availableBoardSpaces);
+            Button boardSpace = ConvertBoardSpace(aiBoardSpaceChosen);
+            StartCoroutine("DelayAIMove", boardSpace);
+        }
     }
 
-    public Button GetRecentMove()
+    void SetGameControllerReferenceOnGamePieces()
     {
-        return recentMove;
+        for (int i = 0; i < buttonList.Length; i++)
+        {
+            gamePieces[i].GetComponent<GamePiece>().SetGameControllerReference(this);
+        }
     }
 
-    public GamePiece GetSelectedPiece()
+    // Coroutine that waits a certain amount of time before the ai sets a piece
+    IEnumerator DelayAIMove(Button boardSpace)
     {
-        return selectedPiece;
+        yield return new WaitForSeconds(3);
+        SetPiece(boardSpace);
+    }
+
+    public void DisableUserInput()
+    {
+        foreach (Button button in buttonList)
+            button.interactable = false;
+    }
+
+    public void EnableUserInput()
+    {
+        foreach (GameCore.BoardSpace availableButton in gameCore.availableBoardSpaces)
+            foreach (Button button in buttonList)
+                if (availableButton.id == button.name.Substring(12))
+                {
+                    button.interactable = true;
+                    break;
+                }
+    }
+
+    public void SetPiece(Button button)
+    {
+        if (selectedPiece != null)
+        {
+            Vector3 newPosition = button.transform.position;
+            selectedPiece.transform.position = newPosition;
+            recentMove = button;
+            button.interactable = false;
+
+            // if this is true, game is over
+            if (gameCore.SetPiece(selectedPiece.name, button.name)) 
+                GameOver();
+            else
+                EndTurn();
+        }
     }
 
     public void SetSelectedPiece(GamePiece gamePiece)
@@ -55,85 +93,28 @@ public class GameController : MonoBehaviour
         selectedPiece = gamePiece;
     }
 
-    public void RemoveFromAvailablePieces(GamePiece gamePiece)
+    public List<GameCore.Piece> GetAvailablePieces()
     {
-        availablePieces.Remove(gamePiece);
+        return gameCore.availablePieces;
     }
 
-    public void AddToUsedPieces(GamePiece gamePiece)
+    public void ConvertAIPiece(string aiPieceChosen)
     {
-        usedPieces.Add(gamePiece);
-        SetGameControllerReferenceOnUsedPiece();
+        string gamePieceString = "GamePiece " + aiPieceChosen;
+        SetSelectedPiece(GameObject.Find(gamePieceString).GetComponent<GamePiece>());
+    }
+
+    public Button ConvertBoardSpace(string aiBoardSpaceChosen)
+    {
+        string boardSpaceString = "Board Space " + aiBoardSpaceChosen;
+        return GameObject.Find(boardSpaceString).GetComponent<Button>();
     }
 
     public void EndTurn()
     {
-        moveCount++;
-
-        // Checks the rows
-        if (CheckWinCondition(buttonList[0], buttonList[1], buttonList[2], buttonList[3]))
-            GameOver();
-        else if (CheckWinCondition(buttonList[4], buttonList[5], buttonList[6], buttonList[7]))
-            GameOver();
-        else if (CheckWinCondition(buttonList[8], buttonList[9], buttonList[10], buttonList[11]))
-            GameOver();
-        else if (CheckWinCondition(buttonList[12], buttonList[13], buttonList[14], buttonList[15]))
-            GameOver();
-
-
-        // Checks the cols
-        if (CheckWinCondition(buttonList[0], buttonList[4], buttonList[8], buttonList[12]))
-            GameOver();
-        else if (CheckWinCondition(buttonList[1], buttonList[5], buttonList[9], buttonList[13]))
-            GameOver();
-        else if (CheckWinCondition(buttonList[2], buttonList[6], buttonList[10], buttonList[14]))
-            GameOver();
-        else if (CheckWinCondition(buttonList[3], buttonList[7], buttonList[11], buttonList[15]))
-            GameOver();
-
-        // Checks the main diagonal (left to right)
-        if (CheckWinCondition(buttonList[0], buttonList[5], buttonList[10], buttonList[15]))
-            GameOver();
-
-        // Checks the secondary diagonal (right to left)
-        if (CheckWinCondition(buttonList[3], buttonList[6], buttonList[9], buttonList[12]))
-            GameOver();
-        // Checks for a tie
-        if (moveCount >= 16)
-            GameOver();
-
-        if (moveCount == 5)
-            RestartGame();
-
-        changeSides();
-    }
-
-    bool CheckWinCondition(Button btn1, Button btn2, Button btn3, Button btn4)
-    {
-        GamePiece gamePiece1 = btn1.GetComponentInChildren<GamePiece>();
-        GamePiece gamePiece2 = btn2.GetComponentInChildren<GamePiece>();
-        GamePiece gamePiece3 = btn3.GetComponentInChildren<GamePiece>();
-        GamePiece gamePiece4 = btn4.GetComponentInChildren<GamePiece>();
-
-        // Height will only be either 0 or 1 if a gamePiece was set there; if it is 2 then piece was set by user         
-        if (gamePiece1.height == 2 || gamePiece2.height == 2 || gamePiece3.height == 2 || gamePiece4.height == 2)
-            return false;
-
-        // checks if there are 4 GamePieces next to each other with similiar stats
-        if (gamePiece1.height == gamePiece2.height && gamePiece1.height == gamePiece3.height && gamePiece1.height == gamePiece4.height)
-            return true;
-
-        else if (gamePiece1.color == gamePiece2.color && gamePiece1.color == gamePiece3.color && gamePiece1.color == gamePiece4.color)
-            return true;
-
-        else if (gamePiece1.emblem == gamePiece2.emblem && gamePiece1.emblem == gamePiece3.emblem && gamePiece1.emblem == gamePiece4.emblem)
-            return true;
-
-        else if (gamePiece1.type == gamePiece2.type && gamePiece1.type == gamePiece3.type && gamePiece1.type == gamePiece4.type)
-            return true;
-
-        // if there arent any conditions met, that means that there isn't a winner
-        return false;
+        selectedPiece = null;
+        ChangeSides();
+        EasyAIGame();
     }
 
     void GameOver()
@@ -141,26 +122,15 @@ public class GameController : MonoBehaviour
         SetBoardInteractable(false);
     }
 
-    void changeSides()
+    void ChangeSides()
     {
-        playerSide = (playerSide == "X") ? "O" : "X";
+        playerTurn = (playerTurn == 1) ? 2 : 1;
     }
 
 
     public void RestartGame()
     {
-        playerSide = "X";
-        moveCount = 0;
-        usedPieces.Clear();
-        availablePieces = gamePieces;
-
-        for (int i = 0; i < buttonList.Length; i++)
-        {
-            buttonList[i].GetComponentInChildren<GamePiece>().height = 2;
-            buttonList[i].GetComponentInChildren<GamePiece>().emblem = 2;
-            buttonList[i].GetComponentInChildren<GamePiece>().color = 2;
-            buttonList[i].GetComponentInChildren<GamePiece>().type = 2;
-        }
+        playerTurn = 1;
         SetBoardInteractable(true);
     }
 
