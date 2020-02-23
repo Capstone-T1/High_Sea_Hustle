@@ -32,7 +32,6 @@ public class GameController : MonoBehaviour
         // Player's turn
         if (playerTurn == 1)
         {
-
             // Have ai pick piece
             string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
             ConvertAIPiece(aiPieceChosen);
@@ -207,6 +206,17 @@ public class GameController : MonoBehaviour
             button.interactable = false;
     }
 
+    public void EnableUserInput()
+    {
+        foreach (GameCore.BoardSpace availableButton in gameCore.availableBoardSpaces)
+            foreach (Button button in buttonList)
+                if (availableButton.id == button.name.Substring(12))
+                {
+                    button.interactable = true;
+                    break;
+                }
+    }
+    
     public void EnableAvailablePieces()
     {
         foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
