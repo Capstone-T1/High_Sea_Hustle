@@ -163,6 +163,7 @@ public class GameController : MonoBehaviour
     public void SetSelectedPiece(GamePiece gamePiece)
     {
         Button chooseButton = GameObject.Find("ChoosePiece").GetComponent<Button>();
+        //stage the piece that's chosen
         selectedPiece = gamePiece;
         Vector3 newPosition = chooseButton.transform.position;
         selectedPiece.transform.position = newPosition;
