@@ -13,11 +13,16 @@ public class MainMenu : MonoBehaviour
 
     public void quickGame()
     {
+        // NOTE: Sets every quickplay to an easy game. Change this to be either easy or hard
+        // whenever that functionality is set in unity
+        GameInfo.gameType = 'E';
+
         SceneManager.LoadScene("SampleScene");
     }
 
     public void multiplayerGame()
     {
+        GameInfo.gameType = 'N';
         SceneManager.LoadScene("GameLobby");
     }
 
@@ -28,6 +33,7 @@ public class MainMenu : MonoBehaviour
 
     public void storyModeGame()
     {
+        GameInfo.gameType = 'N';
         SceneManager.LoadScene("StoryMode");
     }
 
