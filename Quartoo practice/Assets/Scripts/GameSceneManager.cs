@@ -28,6 +28,7 @@ public class GameSceneManager : MonoBehaviour
 
     public void hideHelpPanel()
     {
+        //Panel helpPanel = GameObject.Find("helpPanel").GetComponent<Panel>();
         helpPanel.SetActive(false);
     }
 

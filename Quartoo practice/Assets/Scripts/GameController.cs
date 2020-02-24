@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
         // Player's turn
         if (playerTurn == 1)
         {
+
             // Have ai pick piece
             string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
             ConvertAIPiece(aiPieceChosen);
@@ -104,6 +105,7 @@ public class GameController : MonoBehaviour
 
     public void AISetPiece()
     {
+        DisableAllPieces();
         string aiBoardSpaceChosen = aiController.choosePosition(gameCore.availableBoardSpaces);
         Button boardSpace = ConvertAIBoardSpace(aiBoardSpaceChosen);
         StartCoroutine("DelayAIMove", boardSpace);
@@ -138,6 +140,11 @@ public class GameController : MonoBehaviour
             selectedPiece.transform.position = newPosition;
             recentMove = button;
             button.interactable = false;
+            selectedPiece.GetComponent<BoxCollider2D>().enabled = false;
+            if(playerTurn == 1)
+            {
+                EnableAvailablePieces();
+            }
 
             // if this is true, game is over
             if (gameCore.SetPiece(selectedPiece.name, button.name))
@@ -150,7 +157,6 @@ public class GameController : MonoBehaviour
     public void SetSelectedPiece(GamePiece gamePiece)
     {
         Button chooseButton = GameObject.Find("ChoosePiece").GetComponent<Button>();
-
         selectedPiece = gamePiece;
         Vector3 newPosition = chooseButton.transform.position;
         selectedPiece.transform.position = newPosition;
@@ -199,6 +205,26 @@ public class GameController : MonoBehaviour
     {
         foreach (Button button in buttonList)
             button.interactable = false;
+    }
+
+    public void EnableAvailablePieces()
+    {
+        foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
+            foreach (GamePiece piece in gamePieces)
+                if (availablePiece.id == piece.name.Substring(10))
+                {
+                    Debug.Log(piece.name);
+                    piece.GetComponent<BoxCollider2D>().enabled = true;
+                    break;
+                }
+    }
+
+    public void DisableAllPieces()
+    {
+        foreach (GamePiece piece in gamePieces)
+        {
+            piece.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 
     public void EnableUserInput()
