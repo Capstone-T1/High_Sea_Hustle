@@ -19,7 +19,8 @@ namespace Photon.Pun
 
     #if UNITY_EDITOR
     using UnityEditor;
-    #endif
+    using UnityEngine.UI;
+#endif
 
 
 
@@ -52,6 +53,11 @@ namespace Photon.Pun
 
         [FormerlySerializedAs("group")]
         public byte Group = 0;
+
+        public void RPC(string v, object others, Button moveToSend)
+        {
+            throw new NotImplementedException();
+        }
 
         protected internal bool mixedModeIsReliable = false;
 
