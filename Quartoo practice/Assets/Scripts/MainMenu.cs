@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject helpPanel;
+    public GameObject settingsPanel;
+
     void Start()
     {
         
@@ -47,4 +49,14 @@ public class MainMenu : MonoBehaviour
         helpPanel.SetActive(false);
     }
 
+    public void showSettingsPanel()
+    {
+        Debug.Log("show settings panel");
+        settingsPanel.SetActive(true);
+    }
+
+    public void hideSettingsPanel()
+    {
+        settingsPanel.SetActive(false);
+    }
 }

@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
-public class Settings : MonoBehaviour
+public class SettingsMenu : MonoBehaviour
 {
     public Slider volume;
     public AudioMixer audioMixer;

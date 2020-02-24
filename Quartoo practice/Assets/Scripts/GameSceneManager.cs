@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameSceneManager : MonoBehaviour
 {
     public GameObject helpPanel;
-
+    public GameObject settingsPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +30,18 @@ public class GameSceneManager : MonoBehaviour
     {
         //Panel helpPanel = GameObject.Find("helpPanel").GetComponent<Panel>();
         helpPanel.SetActive(false);
+    }
+
+    public void showSettingsPanel()
+    {
+        settingsPanel.SetActive(true);
+        Debug.Log("make panel visible");
+    }
+
+    public void hideSettingsPanel()
+    {
+        //Panel helpPanel = GameObject.Find("helpPanel").GetComponent<Panel>();
+        settingsPanel.SetActive(false);
     }
 
     public void returnToMainMenu()

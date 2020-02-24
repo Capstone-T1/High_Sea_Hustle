@@ -84,7 +84,6 @@ GameObject:
   - component: {fileID: 3457416412419514176}
   - component: {fileID: 4983444911633503432}
   - component: {fileID: 1551130674369019918}
-  - component: {fileID: 114527379330696564}
   m_Layer: 5
   m_Name: SettingsPopup
   m_TagString: Untagged
@@ -173,20 +172,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114527379330696564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660715512792398732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b855f5e7faa4574f8c99116b1ed7802, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volume: {fileID: 0}
-  audioMixer: {fileID: 0}
 --- !u!1 &2754067431502108051
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +604,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114527379330696564}
+      - m_Target: {fileID: 0}
         m_MethodName: SetVolume
         m_Mode: 4
         m_Arguments:
@@ -641,6 +626,7 @@ GameObject:
   - component: {fileID: 2989955137719216970}
   - component: {fileID: 6522043604490904176}
   - component: {fileID: 418721992093803366}
+  - component: {fileID: 9011973844062075191}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -690,7 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.90588236, g: 0.90588236, b: 0.90588236, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -704,6 +690,20 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &9011973844062075191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5644228864861379561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b855f5e7faa4574f8c99116b1ed7802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 7647460337549103689}
+  audioMixer: {fileID: 0}
 --- !u!1 &6067736017534292486
 GameObject:
   m_ObjectHideFlags: 0
