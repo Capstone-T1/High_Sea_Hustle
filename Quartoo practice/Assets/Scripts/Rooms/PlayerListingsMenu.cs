@@ -1,16 +1,17 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine.UI;
 
 public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private Transform _content;
+
     [SerializeField]
     private PlayerListing _playerListing;
+
     [SerializeField]
     private Text _readyUpText;
 
@@ -28,7 +29,6 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
     {
         base.OnEnable();
         SetReadyUp(false);
-       
     }
 
     //public override void OnEnable()
@@ -87,7 +87,6 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         {
             _listings[index].SetPlayerInfo(player);
         }
-
         else
         {
             PlayerListing listing = Instantiate(_playerListing, _content);
@@ -96,7 +95,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
                 listing.SetPlayerInfo(player);
                 _listings.Add(listing);
             }
-        }        
+        }
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -144,6 +143,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         {
             SetReadyUp(!_ready);
             base.photonView.RPC("RPC_ChangeReadyState", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer, _ready);
+            Debug.Log("Ready button clicked");
         }
     }
 
