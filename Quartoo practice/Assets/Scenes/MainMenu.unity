@@ -184,26 +184,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123243189}
   m_CullTransparentMesh: 0
---- !u!1 &312988317 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5644228864861379561, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
-    type: 3}
-  m_PrefabInstance: {fileID: 820525435}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &312988321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312988317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b855f5e7faa4574f8c99116b1ed7802, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volume: {fileID: 1653067295}
-  audioMixer: {fileID: 0}
 --- !u!1001 &373453272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -906,12 +886,17 @@ PrefabInstance:
     - target: {fileID: 233778964192179123, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1660715512792398732, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
         type: 3}
       propertyPath: m_Name
       value: SettingsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660715512792398732, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3302926170826292254, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
         type: 3}
@@ -927,11 +912,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457416412419514176, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
-        type: 3}
-      propertyPath: m_RenderMode
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7755207020900241077, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
         type: 3}
@@ -1056,7 +1036,7 @@ PrefabInstance:
     - target: {fileID: 8202714609362768557, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dd75d84a8b82c44c88c68d32fb5b86a, type: 3}
@@ -1570,18 +1550,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544946732}
   m_CullTransparentMesh: 0
---- !u!114 &1653067295 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7647460337549103689, guid: 4dd75d84a8b82c44c88c68d32fb5b86a,
-    type: 3}
-  m_PrefabInstance: {fileID: 820525435}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1754402293
 GameObject:
   m_ObjectHideFlags: 0
