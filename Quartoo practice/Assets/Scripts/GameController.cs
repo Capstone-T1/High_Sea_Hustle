@@ -237,17 +237,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void EnableUserInput()
-    {
-        foreach (GameCore.BoardSpace availableButton in gameCore.availableBoardSpaces)
-            foreach (Button button in buttonList)
-                if (availableButton.id == button.name.Substring(12))
-                {
-                    button.interactable = true;
-                    break;
-                }
-    }
-
     public void RestartGame()
     {
         playerTurn = 1;
