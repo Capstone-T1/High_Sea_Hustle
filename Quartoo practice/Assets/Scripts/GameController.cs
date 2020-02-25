@@ -217,17 +217,6 @@ public class GameController : MonoBehaviour
             button.interactable = false;
     }
 
-    public void EnableAvailablePieces()
-    {
-        foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
-            foreach (GamePiece piece in gamePieces)
-                if (availablePiece.id == piece.name.Substring(10))
-                {
-                    Debug.Log(piece.name);
-                    piece.GetComponent<BoxCollider2D>().enabled = true;
-                    break;
-                }
-    }
 
     public void DisableAllPieces()
     {
@@ -260,13 +249,6 @@ public class GameController : MonoBehaviour
                 }
     }
 
-    public void DisableAllPieces()
-    {
-        foreach (GamePiece piece in gamePieces)
-        {
-            piece.GetComponent<BoxCollider2D>().enabled = false;
-        }
-    }
 
     public void RestartGame()
     {
