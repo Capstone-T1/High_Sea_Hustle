@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -195,7 +196,7 @@ public class GameController : MonoBehaviour
     void GameOver()
     {
         Debug.Log("GameOver");
-        SetBoardInteractable(false);
+        SceneManager.LoadScene("GameOver");
     }
 
     void SetGameControllerReferenceOnGamePieces()
@@ -217,7 +218,58 @@ public class GameController : MonoBehaviour
             button.interactable = false;
     }
 
+    public void EnableAvailablePieces()
+    {
+        foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
+            foreach (GamePiece piece in gamePieces)
+                if (availablePiece.id == piece.name.Substring(10))
+                {
+                    Debug.Log(piece.name);
+                    piece.GetComponent<BoxCollider2D>().enabled = true;
+                    break;
+                }
+    }
 
+
+    public void DisableChooseOptions() {
+        Button ChoosePiece = GameObject.Find("ChoosePiece").GetComponent<Button>();
+        Button ChooseAnother = GameObject.Find("ChooseAnother").GetComponent<Button>();
+
+        ChooseAnother.interactable = false;
+        ChoosePiece.interactable = false;
+
+    }
+
+    public void EnableChooseOptions()
+    {
+        Button ChoosePiece = GameObject.Find("ChoosePiece").GetComponent<Button>();
+        Button ChooseAnother = GameObject.Find("ChooseAnother").GetComponent<Button>();
+
+        ChooseAnother.interactable = true;
+        ChoosePiece.interactable = true;
+
+    }
+
+    public void DisableChooseOptions() {
+        Button ChoosePiece = GameObject.Find("ChoosePiece").GetComponent<Button>();
+        Button ChooseAnother = GameObject.Find("ChooseAnother").GetComponent<Button>();
+
+        ChooseAnother.interactable = false;
+        ChoosePiece.interactable = false;
+
+    }
+
+    public void EnableChooseOptions()
+    {
+        Button ChoosePiece = GameObject.Find("ChoosePiece").GetComponent<Button>();
+        Button ChooseAnother = GameObject.Find("ChooseAnother").GetComponent<Button>();
+
+        ChooseAnother.interactable = true;
+        ChoosePiece.interactable = true;
+
+    }
+
+>>>>>>> e7c1e43... added game over scene and navigation to it
     public void DisableAllPieces()
     {
         foreach (GamePiece piece in gamePieces)
