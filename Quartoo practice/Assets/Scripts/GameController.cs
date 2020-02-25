@@ -164,6 +164,7 @@ public class GameController : MonoBehaviour
             Button boardSpace = ConvertAIBoardSpace(aiBoardSpaceChosen);
             StartCoroutine("DelayAIMove", boardSpace);
         }
+
     }
 
     // NOTE: Remove this delay after Levi gets a legit AI integrated
@@ -199,6 +200,13 @@ public class GameController : MonoBehaviour
             recentMove = button;
             button.interactable = false;
             selectedPiece.GetComponent<BoxCollider2D>().enabled = false;
+
+            if(playerTurn == 1)
+            {
+                EnableAvailablePieces();
+                EnableChooseOptions();
+            }
+n
 
             // if this is true, game is over
             if (gameCore.SetPiece(selectedPiece.id, button.name))
@@ -255,6 +263,7 @@ public class GameController : MonoBehaviour
         if (selectedPiece)
         {
             selectedPiece.transform.position = oldPosition;
+
             selectedPiece = null;
         }
     }
@@ -291,9 +300,10 @@ public class GameController : MonoBehaviour
     }
 
 
+
     #endregion
 
-    #region Enabling/Disabling functions
+    #region 
     public void EnableAvailablePieces()
     {
         foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
@@ -314,6 +324,7 @@ public class GameController : MonoBehaviour
         ChoosePiece.interactable = true;
 
     }
+
 
     public void EnableAvailableBoardSpaces()
     {
