@@ -218,6 +218,7 @@ public class GameController : MonoBehaviour
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     public void EnableAvailablePieces()
     {
@@ -231,6 +232,8 @@ public class GameController : MonoBehaviour
                 }
     }
 >>>>>>> disable pieces when not your turn
+=======
+>>>>>>> deleted duplicate functions
 
     public void DisableAllPieces()
     {
