@@ -217,9 +217,6 @@ public class GameController : MonoBehaviour
             button.interactable = false;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     public void EnableAvailablePieces()
     {
         foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
@@ -231,9 +228,7 @@ public class GameController : MonoBehaviour
                     break;
                 }
     }
->>>>>>> disable pieces when not your turn
-=======
->>>>>>> deleted duplicate functions
+
 
     public void DisableAllPieces()
     {
@@ -250,18 +245,6 @@ public class GameController : MonoBehaviour
                 if (availableButton.id == button.name.Substring(12))
                 {
                     button.interactable = true;
-                    break;
-                }
-    }
-    
-    public void EnableAvailablePieces()
-    {
-        foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
-            foreach (GamePiece piece in gamePieces)
-                if (availablePiece.id == piece.name.Substring(10))
-                {
-                    Debug.Log(piece.name);
-                    piece.GetComponent<BoxCollider2D>().enabled = true;
                     break;
                 }
     }
