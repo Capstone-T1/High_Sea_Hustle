@@ -4,7 +4,8 @@ using UnityEngine.Audio;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public Slider volume;
+    public Slider musicSlider;
+    public Slider soundEffectsSlider;
     //public AudioMixer audioMixer;
 
     public void SetMusicVolume (float volume)

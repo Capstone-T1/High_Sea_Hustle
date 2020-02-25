@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     AIv1 aiController = new AIv1();
     public Button[] buttonList;
     public GamePiece selectedPiece;
+    public Vector3 oldPosition;
     public Button recentMove;
     private int playerTurn;
     private static bool isNetworkGame = false;
@@ -114,6 +115,7 @@ public class GameController : MonoBehaviour
     public void AISetPiece()
     {
         DisableAllPieces();
+        DisableChooseOptions();
         string aiBoardSpaceChosen = aiController.choosePosition(gameCore.availableBoardSpaces);
         Button boardSpace = ConvertAIBoardSpace(aiBoardSpaceChosen);
         StartCoroutine("DelayAIMove", boardSpace);
@@ -152,6 +154,7 @@ public class GameController : MonoBehaviour
             if(playerTurn == 1)
             {
                 EnableAvailablePieces();
+                EnableChooseOptions();
             }
 
             // if this is true, game is over
@@ -164,13 +167,31 @@ public class GameController : MonoBehaviour
 
     public void SetSelectedPiece(GamePiece gamePiece)
     {
-        Button chooseButton = GameObject.Find("ChoosePiece").GetComponent<Button>();
+        Button StagePiece = GameObject.Find("StagePiece").GetComponent<Button>();
 
-        //stage the piece that's chosen
-        //disable pieces when not your turn
-        selectedPiece = gamePiece;
-        Vector3 newPosition = chooseButton.transform.position;
-        selectedPiece.transform.position = newPosition;
+        if (selectedPiece)
+        {
+            selectedPiece.transform.position = oldPosition;
+            selectedPiece = gamePiece;
+            oldPosition = gamePiece.transform.position;
+            Vector3 newPosition = StagePiece.transform.position;
+            selectedPiece.transform.position = newPosition;
+        }
+        else
+        {
+            selectedPiece = gamePiece;
+            oldPosition = gamePiece.transform.position;
+            Vector3 newPosition = StagePiece.transform.position;
+            selectedPiece.transform.position = newPosition;
+        }
+    }
+
+    public void ChooseAnotherPiece()
+    {
+        if (selectedPiece)
+        {
+            selectedPiece.transform.position = oldPosition;
+        }
     }
 
     public List<GameCore.Piece> GetAvailablePieces()
@@ -250,26 +271,7 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void DisableChooseOptions() {
-        Button ChoosePiece = GameObject.Find("ChoosePiece").GetComponent<Button>();
-        Button ChooseAnother = GameObject.Find("ChooseAnother").GetComponent<Button>();
-
-        ChooseAnother.interactable = false;
-        ChoosePiece.interactable = false;
-
-    }
-
-    public void EnableChooseOptions()
-    {
-        Button ChoosePiece = GameObject.Find("ChoosePiece").GetComponent<Button>();
-        Button ChooseAnother = GameObject.Find("ChooseAnother").GetComponent<Button>();
-
-        ChooseAnother.interactable = true;
-        ChoosePiece.interactable = true;
-
-    }
-
->>>>>>> e7c1e43... added game over scene and navigation to it
+   
     public void DisableAllPieces()
     {
         foreach (GamePiece piece in gamePieces)
@@ -285,18 +287,6 @@ public class GameController : MonoBehaviour
                 if (availableButton.id == button.name.Substring(12))
                 {
                     button.interactable = true;
-                    break;
-                }
-    }
-    
-    public void EnableAvailablePieces()
-    {
-        foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
-            foreach (GamePiece piece in gamePieces)
-                if (availablePiece.id == piece.name.Substring(10))
-                {
-                    Debug.Log(piece.name);
-                    piece.GetComponent<BoxCollider2D>().enabled = true;
                     break;
                 }
     }
