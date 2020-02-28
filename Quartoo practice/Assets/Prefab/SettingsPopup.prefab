@@ -151,15 +151,15 @@ MonoBehaviour:
   m_FillRect: {fileID: 1918348234324478733}
   m_HandleRect: {fileID: 5715660341586726637}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 100
-  m_WholeNumbers: 1
-  m_Value: 0
+  m_MinValue: 0.0001
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9011973844062075191}
-        m_MethodName: SetSoundEffectsVolume
+      - m_Target: {fileID: 974320092099658713}
+        m_MethodName: SetSoundFXVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -997,14 +997,14 @@ MonoBehaviour:
   m_FillRect: {fileID: 233778964192179123}
   m_HandleRect: {fileID: 8202714609362768557}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 100
-  m_WholeNumbers: 1
-  m_Value: 0
+  m_MinValue: 0.0001
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9011973844062075191}
+      - m_Target: {fileID: 974320092099658713}
         m_MethodName: SetMusicVolume
         m_Mode: 0
         m_Arguments:
@@ -1140,7 +1140,7 @@ GameObject:
   - component: {fileID: 2989955137719216970}
   - component: {fileID: 6522043604490904176}
   - component: {fileID: 418721992093803366}
-  - component: {fileID: 9011973844062075191}
+  - component: {fileID: 974320092099658713}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1210,7 +1210,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &9011973844062075191
+--- !u!114 &974320092099658713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1224,6 +1224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSlider: {fileID: 7647460337549103689}
   soundEffectsSlider: {fileID: 5449293529313529464}
+  masterMixer: {fileID: 24100000, guid: 37c9c23a006b6604284242740f3e4e03, type: 2}
 --- !u!1 &6067736017534292486
 GameObject:
   m_ObjectHideFlags: 0
