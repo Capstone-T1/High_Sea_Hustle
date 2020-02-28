@@ -10,12 +10,8 @@ public class SettingsMenu : MonoBehaviour
 
     void Awake()
     {
-        float savedMusicVol;
-        float savedSoundFXVol;
-        
-        savedMusicVol = PlayerPrefs.GetFloat(("prefsMusicVolume"), musicSlider.maxValue / 2);
-        Debug.Log(PlayerPrefs.GetFloat(("prefsMusicVolume"), musicSlider.maxValue / 2));
-        savedSoundFXVol = PlayerPrefs.GetFloat(("prefsSoundFXVolume"), soundEffectsSlider.maxValue / 2);
+        float savedMusicVol = GameInfo.musicVolume;
+        float savedSoundFXVol = GameInfo.soundFXVolume;
 
         // Manually set value & volume before subscribing to ensure it is set even if slider.value happens to start at the same value as is saved
         SetMusicVolume(savedMusicVol);
@@ -28,13 +24,13 @@ public class SettingsMenu : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         masterMixer.SetFloat("musicVolume", ConvertToDecibel(volume / musicSlider.maxValue)); //Dividing by max allows arbitrary positive slider maxValue
-        PlayerPrefs.SetFloat("prefsMusicVolume", volume);
+        GameInfo.musicVolume = volume;
     }
 
     public void SetSoundFXVolume(float volume)
     {
         masterMixer.SetFloat("soundFXVolume", ConvertToDecibel(volume / soundEffectsSlider.maxValue)); //Dividing by max allows arbitrary positive slider maxValue
-        PlayerPrefs.SetFloat("prefsSoundFXVolume", volume);
+        GameInfo.soundFXVolume = volume;
     }
 
     //  Converts a percentage fraction to decibels,
@@ -42,11 +38,5 @@ public class SettingsMenu : MonoBehaviour
     public float ConvertToDecibel(float volume)
     {
         return Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20f;
-    }
-
-    void OnApplicationQuit()
-    {
-        PlayerPrefs.DeleteKey("prefsMusicVolume");
-        PlayerPrefs.DeleteKey("prefsSoundFXVolume");
     }
 }
