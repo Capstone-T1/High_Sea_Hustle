@@ -9,4 +9,14 @@
     public static float musicVolume = .5f;
 
     public static float soundFXVolume = .5f;
+
+    public void meFirst()
+    {
+        selectPieceAtStart = 1;
+    }
+
+    public void themFirst()
+    {
+        selectPieceAtStart = 2;
+    }
 }

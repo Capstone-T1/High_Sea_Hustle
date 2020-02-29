@@ -48,4 +48,16 @@ public class GameSceneManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+    public void meFirst()
+    {
+        GameInfo.selectPieceAtStart = 1;
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void themFirst()
+    {
+        GameInfo.selectPieceAtStart = 2;
+        SceneManager.LoadScene("GameScene");
+    }
 }

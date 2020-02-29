@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
         // whenever that functionality is set in unity
         GameInfo.gameType = 'E';
 
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("UserPreferences");
     }
 
     public void multiplayerGame()
