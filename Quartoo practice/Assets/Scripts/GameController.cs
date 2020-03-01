@@ -64,6 +64,7 @@ public class GameController : MonoBehaviour
                 EnableAvailableBoardSpaces();
 
                 // ***Var here declaring which board space
+                //Make gameboard interactable, gamepieces not interactable
                
             }
             // Host is choosing a piece for the opponent to place
@@ -73,7 +74,20 @@ public class GameController : MonoBehaviour
                 EnableAvailablePieces();
                 EnableChooseOptions();
             }
+        }
+        // Opponent's turn
+        else if (networkGameState == GameInfo.NetworkGameState.opponentsTurn)
+        {
+            DisableAllBoardSpaces();
+            DisableAllPieces();
+            DisableChooseOptions();
 
+            // recieve move
+            // recieve piece to place()
+            networkController.WaitForTurn();
+        }
+
+        //do more stuff
 
         }
         // Opponent's turn
