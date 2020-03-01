@@ -24,11 +24,14 @@ public class NetworkController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!photonView.IsMine)
-            return;
+        if (photonView != null)
+        {
+            if (!photonView.IsMine)
+                return;
+        }
     }
 
-    public IEnumerator WaitForTurn(string location, string piece)
+    public IEnumerator WaitForTurn()
     {
         Debug.Log("Network waiting for turn");
         while (networkMessageReceived == false)

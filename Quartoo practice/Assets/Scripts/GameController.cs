@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public List<GamePiece> gamePieces;
     private GameCore gameCore = new GameCore();
+    private NetworkController networkController = new NetworkController();
     AIv1 aiController = new AIv1();
     public Button[] buttonList;
     public GamePiece selectedPiece;
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour
     public Button recentMove;
     private int playerTurn;
     private bool placingPiece = false;
+    private GameInfo.NetworkGameState networkGameState = GameInfo.NetworkGameState.start;
 
     void Awake()
     {
@@ -46,6 +48,40 @@ public class GameController : MonoBehaviour
 
     void NetworkGame()
     {
+        // Host's turn
+        if (networkGameState == GameInfo.NetworkGameState.myTurn)
+        {
+            DisableAllBoardSpaces();
+
+            // Host is placing a piece selected by the opponent
+            if (placingPiece == true)
+            {
+                Debug.Log("Host placing a piece");
+                EnableAvailableBoardSpaces();
+
+                //Make gameboard interactable, gamepieces not interactable
+               
+            }
+            // Host is choosing a piece for the opponent to place
+            else
+            {
+                Debug.Log("Host choosing opponents piece");
+                EnableAvailablePieces();
+                EnableChooseOptions();
+            }
+        }
+        // Opponent's turn
+        else if (networkGameState == GameInfo.NetworkGameState.opponentsTurn)
+        {
+            DisableAllBoardSpaces();
+            DisableAllPieces();
+            DisableChooseOptions();
+
+            // recieve move
+            // recieve piece to place()
+            networkController.WaitForTurn();
+        }
+
         //do more stuff
 
         // game state - public enum???
@@ -203,14 +239,12 @@ public class GameController : MonoBehaviour
             button.interactable = false;
             selectedPiece.GetComponent<BoxCollider2D>().enabled = false;
 
-            if(playerTurn == 1)
+            if (GameInfo.gameType == 'N')
             {
-                EnableAvailablePieces();
-                EnableChooseOptions();
+                //Send move to network
+                //networkSendMove(selectedPiece.id, button.name)
             }
-n
-
-            // if this is true, game is over
+                // if this is true, game is over
             if (gameCore.SetPiece(selectedPiece.id, button.name))
                 GameOver();
             else
@@ -285,13 +319,24 @@ n
         else if (GameInfo.gameType == 'H')
             HardAIGame();
         else if (GameInfo.gameType == 'N')
+        {
+            // send piece to opponent
+            // sendPiece(selectedPiece.id)
+            networkGameState = GameInfo.NetworkGameState.opponentsTurn;
             NetworkGame();
+        }
         else
             StoryModeGame();
     }
 
     void GameOver()
     {
+        // May or may not need network game over function
+        if (GameInfo.gameType == 'N')
+        {
+            // tell opponent gameover
+        }
+
         Debug.Log("GameOver");
         SceneManager.LoadScene("GameOver");
     }
