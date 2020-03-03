@@ -57,7 +57,6 @@ public class GameController : MonoBehaviour
         if (playerTurn == 1)
         {
             Debug.Log("Hosts turn");
-
             // Host is placing a piece selected by the opponent
             if (placingPiece == true)
             {
