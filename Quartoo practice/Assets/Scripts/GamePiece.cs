@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GamePiece : MonoBehaviour
 {
@@ -16,5 +14,4 @@ public class GamePiece : MonoBehaviour
     {
         gameController.SetSelectedPiece(this);
     }
-
 }

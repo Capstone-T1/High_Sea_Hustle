@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class NetworkController : MonoBehaviour
 {
+    private GameController gameController;
     public static NetworkController NetController;
     //public static NetworkPlayer netPlayer;
 
@@ -29,6 +30,11 @@ public class NetworkController : MonoBehaviour
         Debug.Log("Instantiated PV");
 
         GameObject player = PhotonNetwork.Instantiate("NetworkPlayer", new Vector3(0, 0, 0), Quaternion.identity, 0);
+    }
+
+    public void SetGameControllerReference(GameController controller)
+    {
+        gameController = controller;
     }
 
     // Update is called once per frame
@@ -62,20 +68,14 @@ public class NetworkController : MonoBehaviour
     public IEnumerator WaitForTurn()
     {
         Debug.Log("Network waiting for turn");
-        Debug.Log("network message recieved = " + networkMessageReceived);
+        Debug.Log(networkMessageReceived);
         while (networkMessageReceived == false)
         {
             yield return null;
         }
 
-        if (networkMessage == 'M')
-        {
-            yield return 'M';
-        }
-        else if (networkMessage == 'P')
-        {
-            yield return 'P';
-        }
+        gameController.NetworkMessageReceived();
+        networkMessageReceived = false;
     }
 
 

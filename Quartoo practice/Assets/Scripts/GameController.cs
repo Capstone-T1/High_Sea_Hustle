@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour
 
         //DisableAllBoardSpaces();
         SetGameControllerReferenceOnGamePieces();
+        SetGameControllerReferenceOnNetwork();
         playerTurn = GameInfo.selectPieceAtStart;
     }
 
@@ -101,22 +102,26 @@ public class GameController : MonoBehaviour
             // recieve move
             // recieve piece to place()
             StartCoroutine(networkController.WaitForTurn());
-            char messageType = networkController.GetNetworkMessage();
-            Debug.Log("Message type = " + messageType);
-            if (messageType == 'M')
-            {
-                ReciveMoveFromNetwork();
-            }
-            else if (messageType == 'P')
-            {
-                RecievePieceFromNetwork();
-            }
             //SelectOpponentsPiece();
         }
 
     }
 
-    public void RecievePieceFromNetwork()
+    public void NetworkMessageReceived()
+    {
+        char messageType = networkController.GetNetworkMessage();
+        Debug.Log("Message type = " + messageType);
+        if (messageType == 'M')
+        {
+            ReceiveMoveFromNetwork();
+        }
+        else if (messageType == 'P')
+        {
+            ReceivePieceFromNetwork();
+        }
+    }
+
+    public void ReceivePieceFromNetwork()
     {
         GamePiece pieceSelected = new GamePiece();
         foreach (GamePiece piece in gamePieces)
@@ -128,10 +133,11 @@ public class GameController : MonoBehaviour
         Debug.Log("selected piece = " + selectedPiece);
         networkGameState = GameInfo.NetworkGameState.myTurn;
         SetSelectedPiece(pieceSelected);
+        ChangeGameStateTurn();
         NetworkGame();
     }
 
-    public void ReciveMoveFromNetwork()
+    public void ReceiveMoveFromNetwork()
     {
         Button networkButton = buttonList[0];
 
@@ -158,6 +164,7 @@ public class GameController : MonoBehaviour
         if (gameCore.SetPiece(selectedPiece.id, networkButton.name))
             GameOver();
 
+        ChangeGameStateTurn();
         NetworkGame();
     }
     #endregion
@@ -494,6 +501,11 @@ public class GameController : MonoBehaviour
         {
             gamePieces[i].GetComponent<GamePiece>().SetGameControllerReference(this);
         }
+    }
+
+    void SetGameControllerReferenceOnNetwork()
+    {
+        networkController.SetGameControllerReference(this);
     }
     #endregion
 }

@@ -24,7 +24,7 @@ public class NetworkPlayer : MonoBehaviour
     [PunRPC]
     public void RPC_receiveNetworkMessage(string message)
     {
-        if (photonView.IsMine)
+        if (!photonView.IsMine)
             return;
 
         Debug.Log("Message sent over network: " + message);
@@ -35,27 +35,27 @@ public class NetworkPlayer : MonoBehaviour
     public void RPC_SendMove(string location, string piece)
     {
         Debug.Log("F: NetworkPlayer.cs/RPC_SendMove was called");
-        if (photonView.IsMine)
+        if (!photonView.IsMine)
             return;
 
         Debug.Log("Receiving move...");
         networkController.SetMovePiece(piece);
         networkController.SetMoveLocation(location);
         networkController.SetNetworkMesage('M');
-        //networkController.SetNetworkMessageRecieved(true);
+        networkController.SetNetworkMessageRecieved(true);
     }
 
     [PunRPC]
     public void RPC_SendPiece(string piece)
     {
-        if (photonView.IsMine)
+        if (!photonView.IsMine)
             return;
 
         Debug.Log("NetworkController = " + networkController);
         Debug.Log("piece = " + piece);
         networkController.SetMovePiece(piece);
         networkController.SetNetworkMesage('P');
-        //networkController.SetNetworkMessageRecieved(true);
+        networkController.SetNetworkMessageRecieved(true);
     }
 
     public void SendMove(string moveLocation, string movePiece)
