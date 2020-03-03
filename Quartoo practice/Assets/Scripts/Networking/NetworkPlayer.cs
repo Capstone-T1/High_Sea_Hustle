@@ -42,12 +42,13 @@ public class NetworkPlayer : MonoBehaviour
         networkController.SetMovePiece(piece);
         networkController.SetMoveLocation(location);
         networkController.SetNetworkMesage('M');
-        networkController.SetNetworkMessageRecieved(true);
+        networkController.SetNetworkMessageReceived(true);
     }
 
     [PunRPC]
     public void RPC_SendPiece(string piece)
     {
+        Debug.Log("F: NetworkPlayer.cs/RPC_SendPiece was called");
         if (!photonView.IsMine)
             return;
 
@@ -55,7 +56,7 @@ public class NetworkPlayer : MonoBehaviour
         Debug.Log("piece = " + piece);
         networkController.SetMovePiece(piece);
         networkController.SetNetworkMesage('P');
-        networkController.SetNetworkMessageRecieved(true);
+        networkController.SetNetworkMessageReceived(true);
     }
 
     public void SendMove(string moveLocation, string movePiece)

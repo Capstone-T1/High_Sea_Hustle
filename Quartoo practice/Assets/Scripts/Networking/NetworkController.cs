@@ -73,9 +73,9 @@ public class NetworkController : MonoBehaviour
         {
             yield return null;
         }
-
-        gameController.NetworkMessageReceived();
+        Debug.Log("Got out of loop");
         networkMessageReceived = false;
+        gameController.NetworkMessageReceived();
     }
 
 
@@ -122,9 +122,10 @@ public class NetworkController : MonoBehaviour
         return networkMessage;
     }
 
-    public void SetNetworkMessageRecieved(bool boolean)
+    public void SetNetworkMessageReceived(bool boolean)
     {
         networkMessageReceived = boolean;
+        Debug.Log("SetNetworkMessageReceived = " + networkMessageReceived);
     }
 
     public bool GetNetworkMessageRecieved()
