@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour
 
                 // ***Var here declaring which board space
                 //Make gameboard interactable, gamepieces not interactable
-               
+
             }
             // Host is choosing a piece for the opponent to place
             else
@@ -301,7 +301,7 @@ public class GameController : MonoBehaviour
                 //Send move to network
                 //networkSendMove(selectedPiece.id, button.name)
             }
-                // if this is true, game is over
+            // if this is true, game is over
             if (gameCore.SetPiece(selectedPiece.id, button.name))
                 GameOver();
             else
@@ -343,7 +343,7 @@ public class GameController : MonoBehaviour
             Vector3 newPosition = StagePiece.transform.position;
             selectedPiece.transform.position = newPosition;
         }
-        else      
+        else
         {
             selectedPiece = gamePiece;
             oldPosition = gamePiece.transform.position;
