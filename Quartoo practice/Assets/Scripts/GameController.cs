@@ -88,9 +88,6 @@ public class GameController : MonoBehaviour
             networkController.WaitForTurn();
         }
 
-        //do more stuff
-
-        }
         // Opponent's turn
         else if (networkGameState == GameInfo.NetworkGameState.opponentsTurn)
         {
@@ -104,7 +101,6 @@ public class GameController : MonoBehaviour
             StartCoroutine(networkController.WaitForTurn());
             //SelectOpponentsPiece();
         }
-
     }
 
     public void NetworkMessageReceived()
