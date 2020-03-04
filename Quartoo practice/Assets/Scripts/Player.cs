@@ -1,16 +1,20 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace High_Sea_Hustle
 {
-    public string playerName = "";
-    public bool isFirstPlayer = false;
-    public enum Avatar
+    public class Player : MonoBehaviourPun
     {
-        malePirate,
-        femalePirate,
-        maleNavy,
-        femaleNavy,
+        public string playerName = "";
+        public bool isFirstPlayer = false;
+        public enum Avatar
+        {
+            malePirate,
+            femalePirate,
+            maleNavy,
+            femaleNavy,
+        }
     }
 }

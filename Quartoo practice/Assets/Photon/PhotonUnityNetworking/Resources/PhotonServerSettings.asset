@@ -34,5 +34,12 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - RPC_ChangeReadyState
+  - sendMove
+  - SendMove
+  - receiveNetworkMessage
+  - RPC_SendMove
+  - RPC_receiveNetworkMessage
+  - RPC_SendPiece
   DisableAutoOpenWizard: 1
   ShowSettings: 1

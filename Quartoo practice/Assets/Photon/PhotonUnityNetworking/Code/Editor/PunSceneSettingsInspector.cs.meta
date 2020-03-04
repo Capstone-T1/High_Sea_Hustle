@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Quartoo practice/Assets/Photon/PhotonUnityNetworking/Code/Editor/PunSceneSettingsInspector.cs.meta
 guid: 1ad59deacfd0848dcb64a51b0a0eb960
+=======
+guid: 46a92cf2cec3f514d8daf16240d648a0
+>>>>>>> added a send move function in networkcontroller and gamecontroller:Quartoo practice/Assets/Scripts/NetworkController.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
