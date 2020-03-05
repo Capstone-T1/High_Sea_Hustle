@@ -145,8 +145,10 @@ public class GameController : MonoBehaviour
 
 
         // if this is true, game is over
-        if (gameCore.SetPiece(selectedPiece.id, networkButton.name))
-            GameOver();
+        char gameState = gameCore.SetPiece(selectedPiece.id, networkButton.name);
+
+        if (gameState == 'W' || gameState == 'T')
+            GameOver(gameState);
     }
     #endregion
 
@@ -172,6 +174,7 @@ public class GameController : MonoBehaviour
         if (playerTurn == 1)
         {
             Debug.Log("player started");
+            EasyAIGame();
             // NOTE: Include some UI to inform user to select a piece
         }
         // Player 2 (ai) selects first piece
@@ -302,8 +305,10 @@ public class GameController : MonoBehaviour
                 //networkSendMove(selectedPiece.id, button.name)
             }
             // if this is true, game is over
-            if (gameCore.SetPiece(selectedPiece.id, button.name))
-                GameOver();
+            char gameState = gameCore.SetPiece(selectedPiece.id, button.name);
+
+            if (gameState == 'W' || gameState == 'T')
+                GameOver(gameState);
             else
                 PiecePlaced();
         }
@@ -389,7 +394,7 @@ public class GameController : MonoBehaviour
             StoryModeGame();
     }
 
-    void GameOver()
+    void GameOver(char endGame)
     {
         // May or may not need network game over function
         if (GameInfo.gameType == 'N')
@@ -397,8 +402,18 @@ public class GameController : MonoBehaviour
             // tell opponent gameover
         }
 
-        Debug.Log("GameOver");
-        SceneManager.LoadScene("GameOver");
+        // Win Condition was met
+        if (endGame == 'W')
+        {
+            Debug.Log("Game Over: Winner");
+            SceneManager.LoadScene("GameOver");
+        }
+        // Tie 
+        else
+        {
+            Debug.Log("Game Over: Tie");
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
     void ChangeSides()
