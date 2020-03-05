@@ -46,7 +46,6 @@ public class MainMenu : MonoBehaviour
 
     public void showSettingsPanel()
     {
-        Debug.Log("show settings panel");
         settingsPanel.SetActive(true);
     }
 
