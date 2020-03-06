@@ -415,7 +415,7 @@ public class GameController : MonoBehaviour
     #endregion
 
     #region Enabling/Disabling GameObjects
-    public void EnableAvailablePieces()
+    private void EnableAvailablePieces()
     {
         foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
             foreach (GamePiece piece in gamePieces)
@@ -476,6 +476,12 @@ public class GameController : MonoBehaviour
         DisableAllBoardSpaces();
         DisableAllPieces();
         DisableChooseOptions();
+    }
+
+    public void EnablePiecesIfTurn()
+    {
+        if (playerTurn == 1 && placingPiece == false)
+            EnableAvailablePieces();
     }
     #endregion
 
