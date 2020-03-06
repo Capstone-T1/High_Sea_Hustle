@@ -1,24 +1,23 @@
 ﻿using Photon.Pun;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class NetworkController : MonoBehaviour
 {
-    private GameController gameController;
+    #region Variables
+
     public static NetworkController NetController;
-    //public static NetworkPlayer netPlayer;
-
-    [SerializeField] private PhotonView photonView;
-    private static char networkMessage;
-    private static bool networkMessageReceived = false;
-
-    // Move variable
     public static string movePiece;
     public static string moveLocation;
 
+    [SerializeField] private PhotonView photonView;
+    private GameController gameController;
+    private static char networkMessage;
+    private static bool networkMessageReceived = false;
+
+    #endregion
+
+    #region Start Update Awake
 
     void Awake()
     {
@@ -32,25 +31,13 @@ public class NetworkController : MonoBehaviour
         GameObject player = PhotonNetwork.Instantiate("NetworkPlayer", new Vector3(0, 0, 0), Quaternion.identity, 0);
     }
 
+    #endregion
+
     public void SetGameControllerReference(GameController controller)
     {
         gameController = controller;
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    // Called to distinguish network game
-    //    if (photonView != null)
-    //    {
-    //        // if my pv is not sending a message
-    //        if (!photonView.IsMine)
-    //            return;
-    //        // check once per frame if a message has been sent
-    //        else
-    //            photonView.RPC("RPC_receiveNetworkMessage", RpcTarget.All, networkMessage);
-    //    }
-    //}
 
     /*
      * [PunRPC]
@@ -67,69 +54,86 @@ public class NetworkController : MonoBehaviour
     // if it is not our turn, we're waiting for a message
     public IEnumerator WaitForTurn()
     {
-        Debug.Log("Network waiting for turn");
-        Debug.Log(networkMessageReceived);
+        Debug.Log("NetworkController.cs/WaitForTurn()");
+
         while (networkMessageReceived == false)
-        {
             yield return null;
-        }
+        
         Debug.Log("Got out of loop");
         networkMessageReceived = false;
         gameController.NetworkMessageReceived();
     }
 
+    #region Public Functions
 
     public void SendMove()
     {
-        Debug.Log("MoveLocation = " + moveLocation);
+        Debug.Log("NetworkController.cs/SendMove()");
+        Debug.Log("moveLocation: " + moveLocation);
         NetworkPlayer.networkPlayer.SendMove(moveLocation, movePiece);
-        Debug.Log("MoveLocation = " + moveLocation);
     }
 
     public void SendPiece()
     {
-        Debug.Log("sending piece " + movePiece);
+        Debug.Log("NetworkController.cs/SendPiece()");
+        Debug.Log("Sending piece: " + movePiece);
         NetworkPlayer.networkPlayer.SendPiece(movePiece);
     }
 
     public void SetMovePiece(string id)
     {
+        Debug.Log("NetworkController.cs/SetMovePiece(string id)");
         movePiece = id;
-        Debug.Log("network movePiece = " + movePiece);
+        Debug.Log("Network movePiece: " + movePiece);
     }
 
     public string GetMovePiece()
     {
+        Debug.Log("NetworkController.cs/GetMovePiece()");
+        Debug.Log("Returning movePiece: " + movePiece);
         return movePiece;
     }
 
     public void SetMoveLocation(string name)
     {
+        Debug.Log("NetworkController.cs/SetMoveLocation(string name)");
+        Debug.Log("Setting move location: " + name);
         moveLocation = name;
     }
     public string GetMoveLocation()
     {
+        Debug.Log("NetworkController.cs/GetMoveLocation()");
+        Debug.Log("Returning moveLocation: " + moveLocation);
         return moveLocation;
     }
 
-    public void SetNetworkMesage(char message)
+    public void SetNetworkMessage(char message)
     {
+        Debug.Log("NetworkController.cs/SetNetworkMesage");
+        Debug.Log("Setting networkMessage to: " + message);
         networkMessage = message;
     }
 
     public char GetNetworkMessage()
     {
+        Debug.Log("NetworkController.cs/GetNetworkMessage()");
+        Debug.Log("Returning networkMessage: " + networkMessage);
         return networkMessage;
     }
 
     public void SetNetworkMessageReceived(bool boolean)
     {
+        Debug.Log("NetworkController.cs/SetNetworkMessageReceived(bool boolean)");
         networkMessageReceived = boolean;
         Debug.Log("SetNetworkMessageReceived = " + networkMessageReceived);
     }
 
     public bool GetNetworkMessageRecieved()
     {
+        Debug.Log("NetworkController.cs/GetNetworkMessageReceived");
+        Debug.Log("Returning networkMessageReceived: " + networkMessageReceived);
         return networkMessageReceived;
     }
+
+    #endregion
 }

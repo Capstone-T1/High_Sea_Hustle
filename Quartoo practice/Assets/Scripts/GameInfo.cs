@@ -19,12 +19,4 @@
     {
         selectPieceAtStart = 2;
     }
-
-    public enum NetworkGameState
-    {
-        start,
-        myTurn,
-        opponentsTurn,
-        gameOver
-    }
 }

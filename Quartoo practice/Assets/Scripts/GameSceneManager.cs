@@ -7,6 +7,8 @@ public class GameSceneManager : MonoBehaviour
 {
     public GameObject helpPanel;
     public GameObject settingsPanel;
+    public GameObject gameOverPanel;
+    public UnityEngine.UI.Text gameOverMessage;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,28 @@ public class GameSceneManager : MonoBehaviour
     {
         //Panel helpPanel = GameObject.Find("helpPanel").GetComponent<Panel>();
         helpPanel.SetActive(false);
+    }
+
+    public void showGameOverPanel(char endgameStatus)
+    {
+        string message;
+
+        if (endgameStatus == 'L')
+        {
+            message = "YOU LOST";
+        }
+        else
+        {
+            message = endgameStatus == 'W' ? "YOU WON!" : "YOU TIED";
+        }
+
+        gameOverMessage.text = message;
+        gameOverPanel.SetActive(true);
+    }
+
+    public void hideGameOverPanel()
+    {
+        gameOverPanel.SetActive(false);
     }
 
     public void showSettingsPanel()
