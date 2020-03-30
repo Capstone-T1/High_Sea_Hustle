@@ -4,10 +4,10 @@ using System.Collections.Generic;
 public class AIHard
 {
     private GameCore gameCore = new GameCore();
-    /*
-        *************************
+
+/*********************************************
         Phase 1 (Pick a place for piece given)
-        *************************
+**********************************************
         1. Check for Win, if there is, place piece in winning location
         //1 is Unnecessary while available pieces > 12
         2. Picking Piece:
@@ -30,7 +30,7 @@ public class AIHard
                     the possibility for a win or prevent as many possible losses?
                     I play aggressive, leaving those areas open, but I am open to suggestions on this.
     */
-    public string choosePosition(List<GameCore.BoardSpace> availableBoardSpaces, GameCore.Piece pieceGivenToAI)
+    public string ChoosePosition(List<GameCore.BoardSpace> availableBoardSpaces, GameCore.Piece pieceGivenToAI)
     {
         string chosenLocation = null;
         int numOfAvailablePositions = availableBoardSpaces.Count;
@@ -39,7 +39,7 @@ public class AIHard
         if (numOfAvailablePositions <= 13)
         {
             //Check to see if peice given leads to win
-            string winningLocation = checkForWinPosition(pieceGivenToAI, availableBoardSpaces);
+            string winningLocation = CheckForWinPosition(pieceGivenToAI, availableBoardSpaces);
             if(winningLocation != null)
             {
                 chosenLocation = winningLocation;
@@ -62,10 +62,9 @@ public class AIHard
     }
 
 
-    /*
-        *************************
+/******************************************
         Phase 2 (Pick a piece for opponent)
-        *************************
+*******************************************
         //Thing to consider is AIs should be playing optimally, should give no chance of winning
         //no matter what; however, humans do not play optimally and may not notice winning 
         //conditions
@@ -86,7 +85,7 @@ public class AIHard
         //believe this is the minimax algorithm that I described.
     */
 
-    public string chooseGamePiece(List<GameCore.Piece> availablePieces, GameCore.Piece pieceAIPlaced)
+    public string ChooseGamePiece(List<GameCore.Piece> availablePieces, GameCore.Piece pieceAIPlaced)
     {
         string chosenPiece = null;
         List<GameCore.Piece> viablePieces = new List<GameCore.Piece>();
@@ -97,12 +96,12 @@ public class AIHard
         //Check for check for possible loss
         if (numOfAvailablePieces > 14)
         {
-            int loss = 0;
+            int loss;
             // checks the rows
             for (int i = 0; i < AITempBoard.Length; i++)
             {
                 GameCore.Piece[] result = AITempBoard[i];
-                loss = checkLossConditions(result[0], result[1], result[2], result[3]);
+                loss = CheckLossConditions(result[0], result[1], result[2], result[3]);
                 if (loss != 0)
                     switch (loss)
                     {
@@ -148,7 +147,6 @@ public class AIHard
                             break;
 
                     }
-                loss = 0;
             }
 
             for (int i = 0; i < AITempBoard.Length; i++)
@@ -156,7 +154,7 @@ public class AIHard
                 GameCore.Piece[] result = new GameCore.Piece[4];
                 for (int j = 0; j < 4; j++)
                     result[j] = AITempBoard[j][i];
-                loss = checkLossConditions(result[0], result[1], result[2], result[3]);
+                loss = CheckLossConditions(result[0], result[1], result[2], result[3]);
                 if (loss != 0)
                     switch (loss)
                     {
@@ -202,13 +200,9 @@ public class AIHard
                             break;
 
                     }
-
-
-                //Find possible condition(s) on board that leads to Opponent winning
-                //Add all pieces without condition to viablePieces
             }
 
-            loss = checkLossConditions(AITempBoard[0][0], AITempBoard[1][1], AITempBoard[2][2], AITempBoard[3][3]);
+            loss = CheckLossConditions(AITempBoard[0][0], AITempBoard[1][1], AITempBoard[2][2], AITempBoard[3][3]);
             if (loss != 0)
             {
                 switch (loss)
@@ -255,11 +249,9 @@ public class AIHard
                         break;
 
                 }
-                loss = 0;
             }
 
-
-           loss = checkLossConditions(AITempBoard[0][3], AITempBoard[1][2], AITempBoard[2][1], AITempBoard[3][0]))
+            loss = CheckLossConditions(AITempBoard[0][3], AITempBoard[1][2], AITempBoard[2][1], AITempBoard[3][0]);
            if (loss != 0)
             {
                 switch (loss)
@@ -306,57 +298,28 @@ public class AIHard
                         break;
 
                 }
-                loss = 0;
             }
         }
 
-        //chosenPiece = viable piece one bit off from pieceAIPlaced that is in viablePieces
-
         if (numOfViablePieces == 0)
         {
-            //Find Piece in AvailablePieces that give the minimum amount of loss conditions
-            //chosenPiece = said piece from above
-
-
-            //OR
-
-            //int option = Random.Range(0, numOfAvailablePieces);
-            //string chosenPiece = availablePieces[option].id;
+            int option = Random.Range(0, numOfAvailablePieces);
+            chosenPiece = availablePieces[option].id;
 
             return chosenPiece;
         }
+
+        //chosenPiece = viable piece one bit off from pieceAIPlaced that is in viablePieces
 
         viablePieces.Clear();
         return chosenPiece;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public string checkForWinPosition(GameCore.Piece givenPiece, List<GameCore.BoardSpace> availableSpaces)
+/*******************************************
+Extra Necessary Functions
+*******************************************/
+    public string CheckForWinPosition(GameCore.Piece givenPiece, List<GameCore.BoardSpace> availableSpaces)
     {
         string winningPosition = null;
         GameCore.Piece[][] AITempBoard = gameCore.GetGameBoard();
@@ -370,7 +333,7 @@ public class AIHard
             for (int j = 0; j < AITempBoard.Length; j++)
             {
                 GameCore.Piece[] result = AITempBoard[j];
-                if (checkWinConditions(result[0], result[1], result[2], result[3]))
+                if (CheckWinConditions(result[0], result[1], result[2], result[3]))
                 {
                     winningPosition = tempList[i].id;
                     return winningPosition;
@@ -383,7 +346,7 @@ public class AIHard
                 GameCore.Piece[] result = new GameCore.Piece[4];
                 for (int k = 0; k < 4; k++)
                     result[j] = AITempBoard[k][j];
-                if (checkWinConditions(result[0], result[1], result[2], result[3]))
+                if (CheckWinConditions(result[0], result[1], result[2], result[3]))
                 {
                     winningPosition = tempList[i].id;
                     return winningPosition;
@@ -391,14 +354,14 @@ public class AIHard
             }
 
             // checks the main diagonal (left to right)
-            if (checkWinConditions(AITempBoard[0][0], AITempBoard[1][1], AITempBoard[2][2], AITempBoard[3][3]))
+            if (CheckWinConditions(AITempBoard[0][0], AITempBoard[1][1], AITempBoard[2][2], AITempBoard[3][3]))
             {
                 winningPosition = tempList[i].id;
                 return winningPosition;
             }
 
             //// checks the secondary diagonal (right to left)
-            if (checkWinConditions(AITempBoard[0][3], AITempBoard[1][2], AITempBoard[2][1], AITempBoard[3][0]))
+            if (CheckWinConditions(AITempBoard[0][3], AITempBoard[1][2], AITempBoard[2][1], AITempBoard[3][0]))
             {
                 winningPosition = tempList[i].id;
                 return winningPosition;
@@ -411,7 +374,7 @@ public class AIHard
         return winningPosition;
     }
 
-    private int checkLossConditions(GameCore.Piece a, GameCore.Piece b, GameCore.Piece c, GameCore.Piece d)
+    private int CheckLossConditions(GameCore.Piece a, GameCore.Piece b, GameCore.Piece c, GameCore.Piece d)
     {
         /*
           Possible Results:
@@ -539,7 +502,7 @@ public class AIHard
         return 0;
     }
 
-    private bool checkWinConditions(GameCore.Piece a, GameCore.Piece b, GameCore.Piece c, GameCore.Piece d)
+    private bool CheckWinConditions(GameCore.Piece a, GameCore.Piece b, GameCore.Piece c, GameCore.Piece d)
     {
         // checks if the other gameBoard of the game board are empty (no GamePieces on them)          
         if (a.color == 2 || b.color == 2 || c.color == 2 || d.color == 2)
