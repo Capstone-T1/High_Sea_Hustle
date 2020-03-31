@@ -30,7 +30,7 @@ public class AIHard
                     the possibility for a win or prevent as many possible losses?
                     I play aggressive, leaving those areas open, but I am open to suggestions on this.
     */
-    public string ChoosePosition(List<GameCore.BoardSpace> availableBoardSpaces, GameCore.Piece pieceGivenToAI)
+    public string ChoosePosition(List<GameCore.BoardSpace> availableBoardSpaces, GameCore.Piece pieceGivenToAI, string recentMoveID)
     {
         string chosenLocation = null;
         int numOfAvailablePositions = availableBoardSpaces.Count;
@@ -87,7 +87,7 @@ public class AIHard
 
     public string ChooseGamePiece(List<GameCore.Piece> availablePieces, GameCore.Piece pieceAIPlaced)
     {
-        string chosenPiece = null;
+        GameCore.Piece chosenPiece = pieceAIPlaced;
         List<GameCore.Piece> viablePieces = new List<GameCore.Piece>();
         GameCore.Piece[][] AITempBoard = gameCore.GetGameBoard();
         int numOfAvailablePieces = availablePieces.Count;
@@ -301,18 +301,406 @@ public class AIHard
             }
         }
 
-        if (numOfViablePieces == 0)
+        string chosenPieceString;
+
+        //Chooses a losing piece at random if there is no non-losing piece
+        if (numOfViablePieces == 0 || numOfAvailablePieces == 16)
         {
             int option = Random.Range(0, numOfAvailablePieces);
-            chosenPiece = availablePieces[option].id;
+            chosenPieceString = availablePieces[option].id;
 
-            return chosenPiece;
+            return chosenPieceString;
         }
 
-        //chosenPiece = viable piece one bit off from pieceAIPlaced that is in viablePieces
+//******************************************************************************
+        //Checks (and chooses) piece 1-bit off
+        int firstOption = Random.Range(0, 3);
+        int tempFirstOption = firstOption;
 
-        viablePieces.Clear();
-        return chosenPiece;
+        do
+        {
+            switch (tempFirstOption)
+            {
+                case 1:
+                    if (chosenPiece.color == 0)
+                        chosenPiece.color = 1;
+                    else
+                        chosenPiece.color = 0;
+                    break;
+                case 2:
+                    if (chosenPiece.height == 0)
+                        chosenPiece.height = 1;
+                    else
+                        chosenPiece.height = 0;
+                    break;
+                case 3:
+                    if (chosenPiece.shape == 0)
+                        chosenPiece.shape = 1;
+                    else
+                        chosenPiece.shape = 0;
+                    break;
+                case 0:
+                    if (chosenPiece.emblem == 0)
+                        chosenPiece.emblem = 1;
+                    else
+                        chosenPiece.emblem = 0;
+                    break;
+            }
+
+            foreach (GameCore.Piece a in viablePieces)
+            {
+                if (chosenPiece.color == a.color &&
+                   chosenPiece.height == a.height &&
+                   chosenPiece.shape == a.shape &&
+                   chosenPiece.emblem == a.emblem)
+                {
+                    chosenPiece.id = a.id;
+                    chosenPieceString = chosenPiece.id;
+                    return chosenPieceString;
+                }
+            }
+
+            chosenPiece = pieceAIPlaced;
+            tempFirstOption = (tempFirstOption + 1) % 4;
+
+        }while (tempFirstOption != firstOption);
+
+//******************************************************************************
+        //Checks (and chooses) piece 2-bit off
+        int secondOption = Random.Range(0, 3);
+        while (secondOption != firstOption)
+            secondOption = Random.Range(0, 3);
+        int tempSecondOption = secondOption;
+
+        do
+        {
+            switch (tempFirstOption)
+            {
+                case 1:
+                    if (chosenPiece.color == 0)
+                        chosenPiece.color = 1;
+                    else
+                        chosenPiece.color = 0;
+                    break;
+                case 2:
+                    if (chosenPiece.height == 0)
+                        chosenPiece.height = 1;
+                    else
+                        chosenPiece.height = 0;
+                    break;
+                case 3:
+                    if (chosenPiece.shape == 0)
+                        chosenPiece.shape = 1;
+                    else
+                        chosenPiece.shape = 0;
+                    break;
+                case 0:
+                    if (chosenPiece.emblem == 0)
+                        chosenPiece.emblem = 1;
+                    else
+                        chosenPiece.emblem = 0;
+                    break;
+            }
+
+            do
+            {
+                switch (tempSecondOption)
+                {
+                    case 1:
+                        if (chosenPiece.color == 0)
+                            chosenPiece.color = 1;
+                        else
+                            chosenPiece.color = 0;
+                        break;
+                    case 2:
+                        if (chosenPiece.height == 0)
+                            chosenPiece.height = 1;
+                        else
+                            chosenPiece.height = 0;
+                        break;
+                    case 3:
+                        if (chosenPiece.shape == 0)
+                            chosenPiece.shape = 1;
+                        else
+                            chosenPiece.shape = 0;
+                        break;
+                    case 0:
+                        if (chosenPiece.emblem == 0)
+                            chosenPiece.emblem = 1;
+                        else
+                            chosenPiece.emblem = 0;
+                        break;
+                }
+
+                foreach (GameCore.Piece a in viablePieces)
+                {
+                    if (chosenPiece.color == a.color &&
+                       chosenPiece.height == a.height &&
+                       chosenPiece.shape == a.shape &&
+                       chosenPiece.emblem == a.emblem)
+                    {
+                        chosenPiece.id = a.id;
+                        chosenPieceString = chosenPiece.id;
+                        return chosenPieceString;
+                    }
+                }
+
+                switch (tempSecondOption)
+                {
+                    case 1:
+                        if (chosenPiece.color == 0)
+                            chosenPiece.color = 1;
+                        else
+                            chosenPiece.color = 0;
+                        break;
+                    case 2:
+                        if (chosenPiece.height == 0)
+                            chosenPiece.height = 1;
+                        else
+                            chosenPiece.height = 0;
+                        break;
+                    case 3:
+                        if (chosenPiece.shape == 0)
+                            chosenPiece.shape = 1;
+                        else
+                            chosenPiece.shape = 0;
+                        break;
+                    case 0:
+                        if (chosenPiece.emblem == 0)
+                            chosenPiece.emblem = 1;
+                        else
+                            chosenPiece.emblem = 0;
+                        break;
+                }
+
+                tempSecondOption = (tempSecondOption + 1) % 4;
+
+            } while (tempSecondOption != secondOption);
+
+            chosenPiece = pieceAIPlaced;
+            tempFirstOption = (tempFirstOption + 1) % 4;
+
+        } while (tempFirstOption != firstOption);
+
+//******************************************************************************
+        //Checks (and chooses) piece 3-bit off
+        int thirdOption = Random.Range(0, 3);
+        while (thirdOption != firstOption && thirdOption != secondOption)
+            thirdOption = Random.Range(0, 3);
+        int tempThirdOption = thirdOption;
+
+        do
+        {
+            switch (tempFirstOption)
+            {
+                case 1:
+                    if (chosenPiece.color == 0)
+                        chosenPiece.color = 1;
+                    else
+                        chosenPiece.color = 0;
+                    break;
+                case 2:
+                    if (chosenPiece.height == 0)
+                        chosenPiece.height = 1;
+                    else
+                        chosenPiece.height = 0;
+                    break;
+                case 3:
+                    if (chosenPiece.shape == 0)
+                        chosenPiece.shape = 1;
+                    else
+                        chosenPiece.shape = 0;
+                    break;
+                case 0:
+                    if (chosenPiece.emblem == 0)
+                        chosenPiece.emblem = 1;
+                    else
+                        chosenPiece.emblem = 0;
+                    break;
+            }
+
+            do
+            {
+                switch (tempSecondOption)
+                {
+                    case 1:
+                        if (chosenPiece.color == 0)
+                            chosenPiece.color = 1;
+                        else
+                            chosenPiece.color = 0;
+                        break;
+                    case 2:
+                        if (chosenPiece.height == 0)
+                            chosenPiece.height = 1;
+                        else
+                            chosenPiece.height = 0;
+                        break;
+                    case 3:
+                        if (chosenPiece.shape == 0)
+                            chosenPiece.shape = 1;
+                        else
+                            chosenPiece.shape = 0;
+                        break;
+                    case 0:
+                        if (chosenPiece.emblem == 0)
+                            chosenPiece.emblem = 1;
+                        else
+                            chosenPiece.emblem = 0;
+                        break;
+                }
+
+                do
+                {
+                    switch (tempThirdOption)
+                    {
+                        case 1:
+                            if (chosenPiece.color == 0)
+                                chosenPiece.color = 1;
+                            else
+                                chosenPiece.color = 0;
+                            break;
+                        case 2:
+                            if (chosenPiece.height == 0)
+                                chosenPiece.height = 1;
+                            else
+                                chosenPiece.height = 0;
+                            break;
+                        case 3:
+                            if (chosenPiece.shape == 0)
+                                chosenPiece.shape = 1;
+                            else
+                                chosenPiece.shape = 0;
+                            break;
+                        case 0:
+                            if (chosenPiece.emblem == 0)
+                                chosenPiece.emblem = 1;
+                            else
+                                chosenPiece.emblem = 0;
+                            break;
+                    }
+
+                    foreach (GameCore.Piece a in viablePieces)
+                    {
+                        if (chosenPiece.color == a.color &&
+                           chosenPiece.height == a.height &&
+                           chosenPiece.shape == a.shape &&
+                           chosenPiece.emblem == a.emblem)
+                        {
+                            chosenPiece.id = a.id;
+                            chosenPieceString = chosenPiece.id;
+                            return chosenPieceString;
+                        }
+                    }
+
+                    switch (tempThirdOption)
+                    {
+                        case 1:
+                            if (chosenPiece.color == 0)
+                                chosenPiece.color = 1;
+                            else
+                                chosenPiece.color = 0;
+                            break;
+                        case 2:
+                            if (chosenPiece.height == 0)
+                                chosenPiece.height = 1;
+                            else
+                                chosenPiece.height = 0;
+                            break;
+                        case 3:
+                            if (chosenPiece.shape == 0)
+                                chosenPiece.shape = 1;
+                            else
+                                chosenPiece.shape = 0;
+                            break;
+                        case 0:
+                            if (chosenPiece.emblem == 0)
+                                chosenPiece.emblem = 1;
+                            else
+                                chosenPiece.emblem = 0;
+                            break;
+                    }
+                    tempThirdOption = (tempThirdOption + 1) % 4;
+
+                } while (tempThirdOption != thirdOption);
+
+                switch (tempSecondOption)
+                {
+                    case 1:
+                        if (chosenPiece.color == 0)
+                            chosenPiece.color = 1;
+                        else
+                            chosenPiece.color = 0;
+                        break;
+                    case 2:
+                        if (chosenPiece.height == 0)
+                            chosenPiece.height = 1;
+                        else
+                            chosenPiece.height = 0;
+                        break;
+                    case 3:
+                        if (chosenPiece.shape == 0)
+                            chosenPiece.shape = 1;
+                        else
+                            chosenPiece.shape = 0;
+                        break;
+                    case 0:
+                        if (chosenPiece.emblem == 0)
+                            chosenPiece.emblem = 1;
+                        else
+                            chosenPiece.emblem = 0;
+                        break;
+                }
+
+                tempSecondOption = (tempSecondOption + 1) % 4;
+
+            } while (tempSecondOption != secondOption);
+
+            chosenPiece = pieceAIPlaced;
+            tempFirstOption = (tempFirstOption + 1) % 4;
+
+        } while (tempFirstOption != firstOption);
+
+//******************************************************************************
+        //chooses piece completely opposite from what AI placed
+
+        if (chosenPiece.color == 0)
+            chosenPiece.color = 1;
+        else
+            chosenPiece.color = 0;
+
+        if (chosenPiece.height == 0)
+            chosenPiece.height = 1;
+        else
+            chosenPiece.height = 0;
+
+        if (chosenPiece.shape == 0)
+            chosenPiece.shape = 1;
+        else
+            chosenPiece.shape = 0;
+
+        if (chosenPiece.emblem == 0)
+            chosenPiece.emblem = 1;
+        else
+            chosenPiece.emblem = 0;
+
+        foreach (GameCore.Piece a in viablePieces)
+        {
+            if (chosenPiece.color == a.color &&
+               chosenPiece.height == a.height &&
+               chosenPiece.shape == a.shape &&
+               chosenPiece.emblem == a.emblem)
+            {
+                chosenPiece.id = a.id;
+                chosenPieceString = chosenPiece.id;
+                return chosenPieceString;
+            }
+        }
+
+        //Catch-All Default
+        int rand = Random.Range(0, numOfAvailablePieces);
+        chosenPieceString = availablePieces[rand].id;
+
+        return chosenPieceString;
     }
 
 
