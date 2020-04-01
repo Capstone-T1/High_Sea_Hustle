@@ -162,7 +162,7 @@ public class GameController : MonoBehaviour
 
     public void NetworkRematch()
     {
-        networkController.IncrementRematch();
+        networkController.SendIncrementRematch();
     }
     #endregion
 
