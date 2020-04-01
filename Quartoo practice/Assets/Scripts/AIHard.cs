@@ -466,7 +466,7 @@ public class AIHard
             return chosenPieceString;
         }
 
-//******************************************************************************
+        //************************************
         //Checks (and chooses) piece 1-bit off
         int firstOption = Random.Range(0, 3);
         int tempFirstOption = firstOption;
@@ -519,7 +519,7 @@ public class AIHard
 
         }while (tempFirstOption != firstOption);
 
-//******************************************************************************
+        //************************************
         //Checks (and chooses) piece 2-bit off
         int secondOption = Random.Range(0, 3);
         while (secondOption != firstOption)
@@ -636,7 +636,7 @@ public class AIHard
 
         } while (tempFirstOption != firstOption);
 
-//******************************************************************************
+        //************************************
         //Checks (and chooses) piece 3-bit off
         int thirdOption = Random.Range(0, 3);
         while (thirdOption != firstOption && thirdOption != secondOption)
@@ -814,7 +814,7 @@ public class AIHard
 
         } while (tempFirstOption != firstOption);
 
-//******************************************************************************
+        //*****************************************************
         //chooses piece completely opposite from what AI placed
 
         if (chosenPiece.color == 0)
