@@ -112,9 +112,9 @@ public class GameCore : MonoBehaviour
         return gameBoard;
     }
 
-    public void setGameBoard()
+    public void setGameBoard(Piece[][] newGameBoard)
     {
-
+        gameBoard = newGameBoard;
     }
 
     private char EndTurn()

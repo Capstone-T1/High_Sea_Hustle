@@ -21,10 +21,11 @@ public class AIHard
         pieceAIPlaced = ConvertGamePiece("AI", gameCore.availablePieces);
     }
 
-    public string ChooseLocation(List<GameCore.BoardSpace> availableBoardSpaces, List<GameCore.Piece> availablePieces, string pieceGivenToAIID, string recentMoveID)
+    public string ChooseLocation(GameCore.Piece[][] newGameBoard, List<GameCore.BoardSpace> availableBoardSpaces, List<GameCore.Piece> availablePieces, string pieceGivenToAIID, string recentMoveID)
     {
         GameCore.BoardSpace chosenLocation = ConvertPosition(recentMoveID, availableBoardSpaces);
         GameCore.Piece pieceGivenToAI = ConvertGamePiece(pieceGivenToAIID, availablePieces);
+        gameCore.setGameBoard(newGameBoard);
         pieceAIPlaced = pieceGivenToAI;
         string chosenLocationString;
         int numOfAvailablePositions = availableBoardSpaces.Count;
@@ -878,28 +879,70 @@ Extra Necessary Functions
         {
             AITempBoard[tempList[i].row][tempList[i].col] = givenPiece;
 
-            // checks the rows
-            for (int j = 0; j < AITempBoard.Length; j++)
+            //check the rows
+            switch(tempList[i].row)
             {
-                GameCore.Piece[] result = AITempBoard[j];
-                if (CheckWinConditions(result[0], result[1], result[2], result[3]))
-                {
-                    winningPosition = tempList[i].id;
-                    return winningPosition;
-                }
+                case 0:
+                    if (CheckWinConditions(AITempBoard[0][0], AITempBoard[0][1], AITempBoard[0][2], AITempBoard[0][3]))
+                    {
+                        winningPosition = tempList[i].id;
+                        return winningPosition;
+                    }
+                    break;
+                case 1:
+                    if (CheckWinConditions(AITempBoard[1][0], AITempBoard[1][1], AITempBoard[1][2], AITempBoard[1][3]))
+                    {
+                        winningPosition = tempList[i].id;
+                        return winningPosition;
+                    }
+                    break;
+                case 2:
+                    if (CheckWinConditions(AITempBoard[2][0], AITempBoard[2][1], AITempBoard[2][2], AITempBoard[2][3]))
+                    {
+                        winningPosition = tempList[i].id;
+                        return winningPosition;
+                    }
+                    break;
+                case 3:
+                    if (CheckWinConditions(AITempBoard[3][0], AITempBoard[3][1], AITempBoard[3][2], AITempBoard[3][3]))
+                    {
+                        winningPosition = tempList[i].id;
+                        return winningPosition;
+                    }
+                    break;
             }
 
-            // checks the cols
-            for (int j = 0; j < AITempBoard.Length; j++)
+            // checks the rows
+            switch (tempList[i].col)
             {
-                GameCore.Piece[] result = new GameCore.Piece[4];
-                for (int k = 0; k < 4; k++)
-                    result[j] = AITempBoard[k][j];
-                if (CheckWinConditions(result[0], result[1], result[2], result[3]))
-                {
-                    winningPosition = tempList[i].id;
-                    return winningPosition;
-                }
+                case 0:
+                    if (CheckWinConditions(AITempBoard[0][0], AITempBoard[1][0], AITempBoard[2][0], AITempBoard[3][0]))
+                    {
+                        winningPosition = tempList[i].id;
+                        return winningPosition;
+                    }
+                    break;
+                case 1:
+                    if (CheckWinConditions(AITempBoard[0][1], AITempBoard[1][1], AITempBoard[2][1], AITempBoard[3][1]))
+                    {
+                        winningPosition = tempList[i].id;
+                        return winningPosition;
+                    }
+                    break;
+                case 2:
+                    if (CheckWinConditions(AITempBoard[0][2], AITempBoard[1][2], AITempBoard[2][2], AITempBoard[3][2]))
+                    {
+                        winningPosition = tempList[i].id;
+                        return winningPosition;
+                    }
+                    break;
+                case 3:
+                    if (CheckWinConditions(AITempBoard[0][3], AITempBoard[1][3], AITempBoard[2][3], AITempBoard[3][3]))
+                    {
+                        winningPosition = tempList[i].id;
+                        return winningPosition;
+                    }
+                    break;
             }
 
             // checks the main diagonal (left to right)
@@ -937,10 +980,6 @@ Extra Necessary Functions
           7 - No Emblem
           8 - Emblem
         */
-
-        // checks if the other gameBoard of the game board are empty (no GamePieces on them)          
-        if (a.color == 2 || b.color == 2 || c.color == 2 || d.color == 2)
-            return 0;
 
         // checks if there are 4 GamePieces next to each other with similiar stats
         //Checks Color
@@ -1053,8 +1092,9 @@ Extra Necessary Functions
 
     private bool CheckWinConditions(GameCore.Piece a, GameCore.Piece b, GameCore.Piece c, GameCore.Piece d)
     {
-        // checks if the other gameBoard of the game board are empty (no GamePieces on them)          
-        if (a.color == 2 || b.color == 2 || c.color == 2 || d.color == 2)
+        if (a.color == 2 || b.color == 2 || c.color == 2 || d.color == 2 ||
+            a.id == null || b.id == null || c.id == null || d.id == null ||
+            a.id == ""   || b.id == ""   || c.id == ""   || d.id == "")
             return false;
 
         // checks if there are 4 GamePieces next to each other with similiar stats
@@ -1079,8 +1119,8 @@ Extra Necessary Functions
             Debug.Log("Possible win by emblem");
             return true;
         }
-        // if there arent any conditions met, that means that there isn't a winner
-        return false;
+        else// if there arent any conditions met, that means that there isn't a winner
+            return false;
     }
 
     private GameCore.BoardSpace ConvertPosition(string position, List<GameCore.BoardSpace> availableBoardSpaces)

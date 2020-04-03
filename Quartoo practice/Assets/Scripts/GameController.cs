@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
         SetGameControllerReferenceOnGamePieces();
         SetGameControllerReferenceOnNetwork();
         playerTurn = GameInfo.selectPieceAtStart;
+        recentMove = buttonList[0];
 
         // Peter Parrot is just a popup like settings/help, hide it at start so he only shows for a
         // tutorial and not for ai or network game.
@@ -296,7 +297,7 @@ public class GameController : MonoBehaviour
             {
                 Debug.Log("AI placing a piece");
 
-                string aiBoardSpaceChosen = hardAIController.ChooseLocation(gameCore.availableBoardSpaces, gameCore.usedPieces, selectedPiece.id, recentMove.name);
+                string aiBoardSpaceChosen = hardAIController.ChooseLocation(gameCore.GetGameBoard(), gameCore.availableBoardSpaces, gameCore.availablePieces, selectedPiece.id, recentMove.name);
                 Button boardSpace = ConvertAIBoardSpace(aiBoardSpaceChosen);
                 StartCoroutine("DelayAIMove", boardSpace);
             }
@@ -315,8 +316,8 @@ public class GameController : MonoBehaviour
 
     // NOTE: Remove this delay after Levi gets a legit AI integrated
     IEnumerator DelayAIMove(Button boardSpace)
-    {
-        yield return new WaitForSeconds(2);
+    { 
+        yield return new WaitForSeconds(0);
         PlacePieceOnBoard(boardSpace);
     }
 
