@@ -255,6 +255,7 @@ public class GameController : MonoBehaviour
                 // Have ai pick piece
                 string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
                 ConvertAIPiece(aiPieceChosen);
+                StagePiece();
                 EndTurn();
             }
         }
@@ -309,6 +310,7 @@ public class GameController : MonoBehaviour
                 // Have ai pick piece
                 string aiPieceChosen = hardAIController.ChooseGamePiece(gameCore.availablePieces);
                 ConvertAIPiece(aiPieceChosen);
+                StagePiece();
                 EndTurn();
             }
         }
@@ -316,7 +318,7 @@ public class GameController : MonoBehaviour
 
     // NOTE: Remove this delay after Levi gets a legit AI integrated
     IEnumerator DelayAIMove(Button boardSpace)
-    { 
+    {
         yield return new WaitForSeconds(0);
         PlacePieceOnBoard(boardSpace);
     }
@@ -436,7 +438,7 @@ public class GameController : MonoBehaviour
     public void TutorialSetPiece(GamePiece gamePiece)
     {
         Button StagePiece = GameObject.Find("StagePiece").GetComponent<Button>();
-  
+
         selectedPiece = gamePiece;
         Vector3 newPosition = StagePiece.transform.position;
         selectedPiece.transform.position = newPosition;
@@ -527,10 +529,34 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void StagePiece()
+    {
+        Button StagePiece = GameObject.Find("StagePiece").GetComponent<Button>();
+
+        foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
+        {
+            foreach (GamePiece piece in gamePieces)
+            {
+                if (availablePiece.id == piece.name.Substring(10))
+                {
+                    piece.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                    break;
+                }
+            }
+        }
+        Vector3 newPosition = StagePiece.transform.position;
+        selectedPiece.transform.position = newPosition;
+
+    }
+
     public void SelectOpponentsPiece()
     {
+        StagePiece();
+
         if (GameInfo.gameType != 'T')
+        {
             EndTurn();
+        }
         else
         {
             DisableChooseOptions();
@@ -555,23 +581,30 @@ public class GameController : MonoBehaviour
 
     public void SetSelectedPiece(GamePiece gamePiece)
     {
-        Debug.Log("called set selected piece");
-        Button StagePiece = GameObject.Find("StagePiece").GetComponent<Button>();
 
-        if (selectedPiece)
+        if (selectedPiece == gamePiece)
         {
-            selectedPiece.transform.position = oldPosition;
-            selectedPiece = gamePiece;
-            oldPosition = gamePiece.transform.position;
-            Vector3 newPosition = StagePiece.transform.position;
-            selectedPiece.transform.position = newPosition;
+            SelectOpponentsPiece();
         }
         else
         {
             selectedPiece = gamePiece;
-            oldPosition = gamePiece.transform.position;
-            Vector3 newPosition = StagePiece.transform.position;
-            selectedPiece.transform.position = newPosition;
+
+            foreach (GameCore.Piece availablePiece in gameCore.availablePieces)
+                foreach (GamePiece piece in gamePieces)
+                    if (availablePiece.id == piece.name.Substring(10))
+                    {
+                        if (piece != selectedPiece)
+                        {
+                            piece.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
+                            break;
+                        }
+                        else if (piece == selectedPiece)
+                        {
+                            piece.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                            break;
+                        }
+                    }
         }
     }
 
@@ -618,7 +651,7 @@ public class GameController : MonoBehaviour
         char playerWinStatus = 'L';
 
         // The player won or tied
-        if (playerTurn == 1) 
+        if (playerTurn == 1)
         {
             // Win Condition was met
             if (endGame == 'W')
