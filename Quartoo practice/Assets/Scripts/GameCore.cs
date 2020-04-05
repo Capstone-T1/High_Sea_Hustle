@@ -72,6 +72,8 @@ public class GameCore : MonoBehaviour
         new Piece(1, 1, 1, 1, "D4")  // silver, tall, triangle, emblem
     };
 
+    public List<BoardSpace> usedBoardSpaces = new List<BoardSpace>();
+
     // Initialize availableBoardSpaces for the ai to use and calculate a move
     public List<BoardSpace> availableBoardSpaces = new List<BoardSpace>()
     {
@@ -101,6 +103,7 @@ public class GameCore : MonoBehaviour
         Piece convertedGamepiece = ConvertGamePiece(gamePieceID);
         usedPieces.Add(convertedGamepiece);
         availablePieces.Remove(convertedGamepiece);
+        usedBoardSpaces.Add(convertedBoardSpace);
         availableBoardSpaces.Remove(convertedBoardSpace);
         gameBoard[convertedBoardSpace.row][convertedBoardSpace.col] = convertedGamepiece;
         return EndTurn();

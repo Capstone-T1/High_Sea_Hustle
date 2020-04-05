@@ -23,6 +23,10 @@ public class AIHard
 
     public string ChooseLocation(GameCore.Piece[][] newGameBoard, List<GameCore.BoardSpace> availableBoardSpaces, List<GameCore.BoardSpace> usedBoardSpaces, List<GameCore.Piece> availablePieces, string pieceGivenToAIID, string recentMoveID)
     {
+        System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+        stopWatch.Start();
+        Debug.Log("Debug: ChooseLocation() starts");
+
         GameCore.BoardSpace chosenLocation = ConvertPosition(recentMoveID, usedBoardSpaces);
         GameCore.Piece pieceGivenToAI = ConvertGamePiece(pieceGivenToAIID, availablePieces);
         gameCore.setGameBoard(newGameBoard);
@@ -38,6 +42,10 @@ public class AIHard
             if (winningLocation != null)
             {
                 chosenLocationString = winningLocation;
+
+                stopWatch.Stop();
+                Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
+
                 return chosenLocationString;
             }
         }
@@ -47,6 +55,9 @@ public class AIHard
         {
             int rand = Random.Range(0, numOfAvailablePositions);
             chosenLocationString = availableBoardSpaces[rand].id;
+
+            stopWatch.Stop();
+            Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
 
             return chosenLocationString;
         }
@@ -64,6 +75,10 @@ public class AIHard
             {
                 chosenLocation.id = a.id;
                 chosenLocationString = chosenLocation.id;
+
+                stopWatch.Stop();
+                Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
+
                 return chosenLocationString;
             }
         }
@@ -105,6 +120,10 @@ public class AIHard
                         {
                             chosenLocation.id = a.id;
                             chosenLocationString = chosenLocation.id;
+
+                            stopWatch.Stop();
+                            Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
+
                             return chosenLocationString;
                         }
                     }
@@ -146,6 +165,10 @@ public class AIHard
                         {
                             chosenLocation.id = a.id;
                             chosenLocationString = chosenLocation.id;
+
+                            stopWatch.Stop();
+                            Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
+
                             return chosenLocationString;
                         }
                     }
@@ -203,6 +226,10 @@ public class AIHard
                         {
                             chosenLocation.id = a.id;
                             chosenLocationString = chosenLocation.id;
+
+                            stopWatch.Stop();
+                            Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
+
                             return chosenLocationString;
                         }
                     }
@@ -220,6 +247,8 @@ public class AIHard
         int option = Random.Range(0, numOfAvailablePositions);
         chosenLocationString = availableBoardSpaces[option].id;
 
+        stopWatch.Stop();
+        Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
         return chosenLocationString;
     }
 
@@ -249,14 +278,19 @@ public class AIHard
 
     public string ChooseGamePiece(List<GameCore.Piece> availablePieces)
     {
+        System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+        stopWatch.Start();
+        Debug.Log("Debug: ChooseGamePiece() starts");
+
         GameCore.Piece chosenPiece = pieceAIPlaced;
         List<GameCore.Piece> viablePieces = new List<GameCore.Piece>();
         GameCore.Piece[][] AITempBoard = gameCore.GetGameBoard();
-        int numOfAvailablePieces = availablePieces.Count;
-        int numOfViablePieces = viablePieces.Count;
+
+        foreach (GameCore.Piece a in availablePieces)
+            viablePieces.Add(a);
 
         //Check for check for possible loss
-        if (numOfAvailablePieces < 14)
+        if (availablePieces.Count < 14)
         {
             int[] loss = new int[4];
             // checks the rows
@@ -265,55 +299,55 @@ public class AIHard
                 GameCore.Piece[] result = AITempBoard[i];
                 loss = CheckLossConditions(result[0], result[1], result[2], result[3]);
                 if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
-                { 
-                    if(loss[0] == 0)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.color == 1)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
-                    else if(loss[0] ==1)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.color == 0)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
-                    if(loss[1] == 0)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.height == 1)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
-                    else if(loss[1] == 1)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.height == 0)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
-                    if(loss[2] == 0)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.shape == 1)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
-                    else if(loss[2] == 1)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.shape == 0)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
-                    if(loss[3] == 0)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.emblem == 1)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
-                    else if(loss[3] == 1)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.emblem == 0)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                {
+                    if (loss[0] == 0)
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].color == 0)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
+                    else if (loss[0] == 1)
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].color == 1)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
+                    if (loss[1] == 0)
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].height == 0)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
+                    else if (loss[1] == 1)
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].height == 1)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
+                    if (loss[2] == 0)
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].shape == 0)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
+                    else if (loss[2] == 1)
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].shape == 1)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
+                    if (loss[3] == 0)
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].emblem == 0)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
+                    else if (loss[3] == 1)
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].emblem == 1)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                 }
             }
 
@@ -322,174 +356,178 @@ public class AIHard
                 GameCore.Piece[] result = new GameCore.Piece[4];
                 for (int j = 0; j < 4; j++)
                     result[j] = AITempBoard[j][i];
+
                 loss = CheckLossConditions(result[0], result[1], result[2], result[3]);
                 if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
                 {
                     if (loss[0] == 0)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.color == 1)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].color == 0)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                     else if (loss[0] == 1)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.color == 0)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].color == 1)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                     if (loss[1] == 0)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.height == 1)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].height == 0)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                     else if (loss[1] == 1)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.height == 0)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].height == 1)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                     if (loss[2] == 0)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.shape == 1)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].shape == 0)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                     else if (loss[2] == 1)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.shape == 0)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].shape == 1)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                     if (loss[3] == 0)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.emblem == 1)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].emblem == 0)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                     else if (loss[3] == 1)
-                        foreach (GameCore.Piece a in availablePieces)
-                            if (a.emblem == 0)
-                                viablePieces.Add(a);
-                            else
-                                viablePieces.Remove(a);
+                    {
+                        for (int a = 0; a < viablePieces.Count; a++)
+                            if (viablePieces[a].emblem == 1)
+                                viablePieces.Remove(viablePieces[a]);
+                    }
                 }
             }
 
             loss = CheckLossConditions(AITempBoard[0][0], AITempBoard[1][1], AITempBoard[2][2], AITempBoard[3][3]);
-            if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+        if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
             {
                 if (loss[0] == 0)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.color == 1)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].color == 0)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 else if (loss[0] == 1)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.color == 0)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].color == 1)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 if (loss[1] == 0)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.height == 1)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].height == 0)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 else if (loss[1] == 1)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.height == 0)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].height == 1)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 if (loss[2] == 0)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.shape == 1)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].shape == 0)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 else if (loss[2] == 1)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.shape == 0)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].shape == 1)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 if (loss[3] == 0)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.emblem == 1)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].emblem == 0)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 else if (loss[3] == 1)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.emblem == 0)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].emblem == 1)
+                            viablePieces.Remove(viablePieces[a]);
+                }
             }
 
             loss = CheckLossConditions(AITempBoard[0][3], AITempBoard[1][2], AITempBoard[2][1], AITempBoard[3][0]);
-            if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+        if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
             {
                 if (loss[0] == 0)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.color == 1)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].color == 0)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 else if (loss[0] == 1)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.color == 0)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].color == 1)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 if (loss[1] == 0)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.height == 1)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].height == 0)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 else if (loss[1] == 1)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.height == 0)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].height == 1)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 if (loss[2] == 0)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.shape == 1)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].shape == 0)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 else if (loss[2] == 1)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.shape == 0)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].shape == 1)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 if (loss[3] == 0)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.emblem == 1)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].emblem == 0)
+                            viablePieces.Remove(viablePieces[a]);
+                }
                 else if (loss[3] == 1)
-                    foreach (GameCore.Piece a in availablePieces)
-                        if (a.emblem == 0)
-                            viablePieces.Add(a);
-                        else
-                            viablePieces.Remove(a);
+                {
+                    for (int a = 0; a < viablePieces.Count; a++)
+                        if (viablePieces[a].emblem == 1)
+                            viablePieces.Remove(viablePieces[a]);
+                }
             }
         }
 
         string chosenPieceString;
 
         //Chooses a losing piece at random if there is no non-losing piece
-        if (numOfViablePieces == 0 || numOfAvailablePieces == 16)
+        if (viablePieces.Count == 0 ||availablePieces.Count == 16)
         {
-            int option = Random.Range(0, numOfAvailablePieces);
+            int option = Random.Range(0, availablePieces.Count);
             chosenPieceString = availablePieces[option].id;
+
+            stopWatch.Stop();
+            Debug.Log("Debug: ChooseGamePiece() - " + stopWatch.Elapsed);
 
             return chosenPieceString;
         }
@@ -538,6 +576,10 @@ public class AIHard
                 {
                     chosenPiece.id = a.id;
                     chosenPieceString = chosenPiece.id;
+
+                    stopWatch.Stop();
+                    Debug.Log("Debug: ChooseGamePiece() - " + stopWatch.Elapsed);
+
                     return chosenPieceString;
                 }
             }
@@ -623,6 +665,10 @@ public class AIHard
                     {
                         chosenPiece.id = a.id;
                         chosenPieceString = chosenPiece.id;
+
+                        stopWatch.Stop();
+                        Debug.Log("Debug: ChooseGamePiece() - " + stopWatch.Elapsed);
+
                         return chosenPieceString;
                     }
                 }
@@ -770,6 +816,10 @@ public class AIHard
                         {
                             chosenPiece.id = a.id;
                             chosenPieceString = chosenPiece.id;
+
+                            stopWatch.Stop();
+                            Debug.Log("Debug: ChooseGamePiece() - " + stopWatch.Elapsed);
+
                             return chosenPieceString;
                         }
                     }
@@ -874,13 +924,20 @@ public class AIHard
             {
                 chosenPiece.id = a.id;
                 chosenPieceString = chosenPiece.id;
+
+                stopWatch.Stop();
+                Debug.Log("Debug: ChooseGamePiece() - " + stopWatch.Elapsed);
+
                 return chosenPieceString;
             }
         }
 
         //Catch-All Default
-        int rand = Random.Range(0, numOfAvailablePieces);
+        int rand = Random.Range(0, availablePieces.Count);
         chosenPieceString = availablePieces[rand].id;
+
+        stopWatch.Stop();
+        Debug.Log("Debug: ChooseGamePiece() - " + stopWatch.Elapsed);
 
         return chosenPieceString;
     }
@@ -1008,11 +1065,11 @@ Extra Necessary Functions
             (a.color != 2 && b.color != 2 && d.color != 2) ||
             (a.color != 2 && d.color != 2 && c.color != 2))
         {
-            //Checks Color
-            if ((a.color == b.color && a.color == c.color) ||
-                (b.color == c.color && b.color == d.color) ||
-                (a.color == b.color && a.color == d.color) ||
-                (a.color == c.color && a.color == d.color))
+            //Checks Color (Checks 3/4 share condition && 1 of those 3 is not empty && at least 1/4 is empty)
+            if (((a.color == b.color && a.color == c.color) && (a.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((b.color == c.color && b.color == d.color) && (d.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.color == b.color && a.color == d.color) && (a.color != 2 || b.color != 2 || d.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.color == c.color && a.color == d.color) && (a.color != 2 || d.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
             {
                 //if Gold
                 if ((a.color == 0 && b.color == 0 && c.color == 0) ||
@@ -1035,10 +1092,10 @@ Extra Necessary Functions
             }
 
             //Checks Height
-            if ((a.height == b.height && a.height == c.height) ||
-                (b.height == c.height && b.height == d.height) ||
-                (a.height == b.height && a.height == d.height) ||
-                (a.height == c.height && a.height == d.height))
+            if (((a.height == b.height && a.height == c.height) && (a.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((b.height == c.height && b.height == d.height) && (d.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.height == b.height && a.height == d.height) && (a.color != 2 || b.color != 2 || d.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.height == c.height && a.height == d.height) && (a.color != 2 || d.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
 
             {
                 //If Short
@@ -1062,10 +1119,10 @@ Extra Necessary Functions
             }
 
             //Checks Shape
-            if ((a.shape == b.shape && a.shape == c.shape) ||
-                (b.shape == c.shape && b.shape == d.shape) ||
-                (a.shape == b.shape && a.shape == d.shape) ||
-                (a.shape == c.shape && a.shape == d.shape))
+            if (((a.shape == b.shape && a.shape == c.shape) && (a.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((b.shape == c.shape && b.shape == d.shape) && (d.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.shape == b.shape && a.shape == d.shape) && (a.color != 2 || b.color != 2 || d.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.shape == c.shape && a.shape == d.shape) && (a.color != 2 || d.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
             {
                 //If Round
                 if ((a.shape == 0 && b.shape == 0 && c.shape == 0) ||
@@ -1088,10 +1145,10 @@ Extra Necessary Functions
             }
 
             //Checks Emblem
-            if ((a.emblem == b.emblem && a.emblem == c.emblem) ||
-                     (b.emblem == c.emblem && b.emblem == d.emblem) ||
-                     (a.emblem == b.emblem && a.emblem == d.emblem) ||
-                     (a.emblem == c.emblem && a.emblem == d.emblem))
+            if (((a.emblem == b.emblem && a.emblem == c.emblem) && (a.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((b.emblem == c.emblem && b.emblem == d.emblem) && (d.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.emblem == b.emblem && a.emblem == d.emblem) && (a.color != 2 || b.color != 2 || d.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.emblem == c.emblem && a.emblem == d.emblem) && (a.color != 2 || d.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
             {
                 //If No Emblem
                 if ((a.emblem == 0 && b.emblem == 0 && c.emblem == 0) ||
