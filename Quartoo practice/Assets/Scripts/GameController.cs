@@ -298,7 +298,7 @@ public class GameController : MonoBehaviour
             {
                 Debug.Log("AI placing a piece");
 
-                string aiBoardSpaceChosen = hardAIController.ChooseLocation(gameCore.GetGameBoard(), gameCore.availableBoardSpaces, gameCore.availablePieces, selectedPiece.id, recentMove.name);
+                string aiBoardSpaceChosen = hardAIController.ChooseLocation(gameCore.GetGameBoard(), gameCore.availableBoardSpaces, gameCore.usedBoardSpaces, gameCore.availablePieces, selectedPiece.id, recentMove.name);
                 Button boardSpace = ConvertAIBoardSpace(aiBoardSpaceChosen);
                 StartCoroutine("DelayAIMove", boardSpace);
             }

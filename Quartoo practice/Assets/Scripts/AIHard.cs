@@ -21,9 +21,9 @@ public class AIHard
         pieceAIPlaced = ConvertGamePiece("AI", gameCore.availablePieces);
     }
 
-    public string ChooseLocation(GameCore.Piece[][] newGameBoard, List<GameCore.BoardSpace> availableBoardSpaces, List<GameCore.Piece> availablePieces, string pieceGivenToAIID, string recentMoveID)
+    public string ChooseLocation(GameCore.Piece[][] newGameBoard, List<GameCore.BoardSpace> availableBoardSpaces, List<GameCore.BoardSpace> usedBoardSpaces, List<GameCore.Piece> availablePieces, string pieceGivenToAIID, string recentMoveID)
     {
-        GameCore.BoardSpace chosenLocation = ConvertPosition(recentMoveID, availableBoardSpaces);
+        GameCore.BoardSpace chosenLocation = ConvertPosition(recentMoveID, usedBoardSpaces);
         GameCore.Piece pieceGivenToAI = ConvertGamePiece(pieceGivenToAIID, availablePieces);
         gameCore.setGameBoard(newGameBoard);
         pieceAIPlaced = pieceGivenToAI;
