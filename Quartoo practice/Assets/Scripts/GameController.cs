@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     #region Variables and Startup
     // Controllers
     private static NetworkController networkController = new NetworkController();
-    private AIv1 aiController = new AIv1();
+    private AIEasy easyAIController = new AIEasy();
     private AIHard hardAIController = new AIHard();
     private GameCore gameCore = new GameCore();
     private TutorialManager tutorialManager;
@@ -239,7 +239,7 @@ public class GameController : MonoBehaviour
             {
                 Debug.Log("Easy AI placing a piece");
 
-                string aiBoardSpaceChosen = aiController.choosePosition(gameCore.availableBoardSpaces);
+                string aiBoardSpaceChosen = easyAIController.ChooseLocation(gameCore.GetGameBoard(), gameCore.availableBoardSpaces, gameCore.usedBoardSpaces, gameCore.availablePieces, selectedPiece.id, recentMove.name);
                 Button boardSpace = ConvertAIBoardSpace(aiBoardSpaceChosen);
                 StartCoroutine("DelayAIMove", boardSpace);
             }
@@ -249,7 +249,7 @@ public class GameController : MonoBehaviour
                 Debug.Log("Easy AI choosing opponents piece");
 
                 // Have ai pick piece
-                string aiPieceChosen = aiController.chooseGamePiece(gameCore.availablePieces);
+                string aiPieceChosen = easyAIController.ChooseGamePiece(gameCore.availablePieces);
                 ConvertAIPiece(aiPieceChosen);
                 StagePiece();
                 EndTurn();
