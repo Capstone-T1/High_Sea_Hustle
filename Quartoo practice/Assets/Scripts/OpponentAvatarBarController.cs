@@ -68,12 +68,12 @@ public class OpponentAvatarBarController : MonoBehaviour
             else if (GameInfo.gameType == 'N') //Networked game
             {
                 //Access the networked opponent's avatar and username
-                networkController.GetOpponentInfo(opponentsAvatar, opponentsUsername);
-                
+                networkController.SendPlayerInfo(opponentsAvatar, opponentsUsername);
+
                 usernametext.text = opponentsUsername;
                 ShowAvatar();
 
-                Debug.Log("Avatar: " + opponentsAvatar + " Name: " + opponentsUsername);
+                Debug.Log("***Courtney look here*** Avatar: " + opponentsAvatar + " Name: " + opponentsUsername);
             }
             else if (GameInfo.gameType == 'S') //Story Mode
             {
