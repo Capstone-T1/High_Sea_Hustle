@@ -12,6 +12,9 @@ public class NetworkController : MonoBehaviour
     public static string moveLocation;
     public string roomName;
 
+    public static string netOpponentsAvatar;
+    public static string netOpponentsName;
+
     [SerializeField] private PhotonView photonView;
     private GameController gameController;
     private static char networkMessage;
@@ -205,6 +208,12 @@ public class NetworkController : MonoBehaviour
         Debug.Log("NetworkController.cs/GetNetworkMessageReceived");
         Debug.Log("Returning networkMessageReceived: " + networkMessageReceived);
         return networkMessageReceived;
+    }
+
+    public void GetOpponentInfo(string avatar, string name)
+    {
+        netOpponentsAvatar = avatar;
+        netOpponentsName = name;
     }
 
     #endregion

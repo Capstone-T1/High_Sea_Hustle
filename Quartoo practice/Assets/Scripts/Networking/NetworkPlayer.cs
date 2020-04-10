@@ -64,15 +64,6 @@ public class NetworkPlayer : MonoBehaviour
         networkController.SetNetworkMessageReceived(true);
     }
 
-    //[PunRPC]
-    //public void RPC_SendRestartChoice(bool choice)
-    //{
-    //    if (!photonView.IsMine)
-    //        return;
-
-
-    //}
-
     [PunRPC]
     public void RPC_SendIncrementedRematch()
     {
@@ -80,6 +71,15 @@ public class NetworkPlayer : MonoBehaviour
             return;
 
         networkController.IncrementRematch();
+    }
+
+    [PunRPC]
+    public void RPC_SendPlayerInfo(string avatar, string name)
+    {
+        if (!photonView.IsMine)
+            return;
+
+        networkController.GetOpponentInfo(avatar, name);
     }
 
     #endregion
