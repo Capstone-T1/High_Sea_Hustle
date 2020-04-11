@@ -1,14 +1,17 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OpponentAvatarBarController : MonoBehaviour
+public class OpponentAvatarBarController : MonoBehaviourPun
 {
     public GameObject opponentAvatarBar;
     public Image avatarImage;
     public Text usernametext;
     private static NetworkController networkController = new NetworkController();
+
+    public Text debugText;
 
     public Sprite[] avatarImageOptions;
 
@@ -67,13 +70,18 @@ public class OpponentAvatarBarController : MonoBehaviour
             }
             else if (GameInfo.gameType == 'N') //Networked game
             {
-                //Access the networked opponent's avatar and username
-                networkController.SendPlayerInfo(opponentsAvatar, opponentsUsername);
+                if (gameObject.GetComponent<PhotonView>() == null)
+                {
+                    PhotonView photonView = gameObject.AddComponent<PhotonView>();
+                    photonView.ViewID = 20;
+                }
+                else
+                {
+                    photonView.ViewID = 20;
+                }
 
+                photonView.RPC("SendUserInfo", RpcTarget.Others, GameInfo.avatar, GameInfo.username);
                 usernametext.text = opponentsUsername;
-                ShowAvatar();
-
-                Debug.Log("***Courtney look here*** Avatar: " + opponentsAvatar + " Name: " + opponentsUsername);
             }
             else if (GameInfo.gameType == 'S') //Story Mode
             {
@@ -91,14 +99,14 @@ public class OpponentAvatarBarController : MonoBehaviour
                 {
                     return;
                 }
-                ShowAvatar();
+                ShowAvatar(opponentsAvatar);
             }
             else
             {
                 //Give the opponent a default avatar and username 
                 opponentsAvatar = "PirateCaptain";
                 usernametext.text = "Opponent Player";
-                ShowAvatar();
+                ShowAvatar(opponentsUsername);
                 return;
             }
 
@@ -106,21 +114,21 @@ public class OpponentAvatarBarController : MonoBehaviour
         }
     }
 
-    private void ShowAvatar()
+    private void ShowAvatar(string avatar)
     {
-        if (GameInfo.avatar == "PirateCaptain")
+        if (avatar == "PirateCaptain")
         {
             avatarImage.sprite = avatarImageOptions[0];
         }
-        else if (GameInfo.avatar == "PirateSailor")
+        else if (avatar == "PirateSailor")
         {
             avatarImage.sprite = avatarImageOptions[1];
         }
-        else if (GameInfo.avatar == "NavyCaptain")
+        else if (avatar == "NavyCaptain")
         {
             avatarImage.sprite = avatarImageOptions[2];
         }
-        else if (GameInfo.avatar == "NavySailor")
+        else if (avatar == "NavySailor")
         {
             avatarImage.sprite = avatarImageOptions[3];
         }
@@ -129,5 +137,17 @@ public class OpponentAvatarBarController : MonoBehaviour
             Debug.Log("Player avatar name was invalid");
             return;
         }
+    }
+
+    [PunRPC]
+    void SendUserInfo(string avatar, string username)
+    {
+        SetOpponentAvatar(avatar, username);
+    }
+
+    private void SetOpponentAvatar(string avatar, string username)
+    {
+        usernametext.text = username;
+        ShowAvatar(avatar);
     }
 }

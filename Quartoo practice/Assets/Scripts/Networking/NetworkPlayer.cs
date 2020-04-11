@@ -73,16 +73,6 @@ public class NetworkPlayer : MonoBehaviour
         networkController.IncrementRematch();
     }
 
-    [PunRPC]
-    public void RPC_SendPlayerInfo(string avatar, string username)
-    {
-        if (!photonView.IsMine)
-            return;
-
-        networkController.SetAvatar(avatar);
-        networkController.SetUsername(username);
-    }
-
     #endregion
 
     #region Functions
@@ -102,10 +92,6 @@ public class NetworkPlayer : MonoBehaviour
     public void SendIncrementedRematch(int rematch)
     {
         photonView.RPC("RPC_SendIncrementedRematch", RpcTarget.All);
-    }
-    public void SendPlayerInfo(string avatar, string username)
-    {
-        photonView.RPC("RPC_SendPlayerInfo", RpcTarget.All, GameInfo.username, GameInfo.avatar);
     }
     #endregion
 }

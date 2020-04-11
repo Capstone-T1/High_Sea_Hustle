@@ -14851,6 +14851,16 @@ PrefabInstance:
       propertyPath: opponentAvatarBar
       value: 
       objectReference: {fileID: 2129932464}
+    - target: {fileID: 1396600887263568732, guid: 34418eda6aaec26479d809fd052c79c2,
+        type: 3}
+      propertyPath: photonView
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396600887263568732, guid: 34418eda6aaec26479d809fd052c79c2,
+        type: 3}
+      propertyPath: debugText
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2817228979616782492, guid: 34418eda6aaec26479d809fd052c79c2,
         type: 3}
       propertyPath: m_Name

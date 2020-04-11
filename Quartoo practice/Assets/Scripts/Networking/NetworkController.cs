@@ -215,20 +215,5 @@ public class NetworkController : MonoBehaviour
         netOpponentsAvatar = avatar;
         netOpponentsName = name;
     }
-
-    public void SendPlayerInfo(string avatar, string name)
-    {
-        NetworkPlayer.networkPlayer.SendPlayerInfo(avatar, name);
-    }
-
-    public void SetAvatar(string avatar)
-    {
-        netOpponentsAvatar = avatar;
-    }
-
-    public void SetUsername(string username)
-    {
-        netOpponentsName = username;
-    }
     #endregion
 }
