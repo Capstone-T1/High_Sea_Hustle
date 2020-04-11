@@ -1075,7 +1075,7 @@ Extra Necessary Functions
                 if ((a.color == 0 && b.color == 0 && c.color == 0) ||
                    (b.color == 0 && c.color == 0 && d.color == 0) ||
                    (a.color == 0 && b.color == 0 && d.color == 0) ||
-                   (a.color == 0 && b.color == 0 && c.color == 0))
+                   (a.color == 0 && d.color == 0 && c.color == 0))
                 {
                     Debug.Log("Possible loss by Gold on Board");
                     lossCondition[0] = 0;
@@ -1084,7 +1084,7 @@ Extra Necessary Functions
                 else if ((a.color == 1 && b.color == 1 && c.color == 1) ||
                          (b.color == 1 && c.color == 1 && d.color == 1) ||
                          (a.color == 1 && b.color == 1 && d.color == 1) ||
-                         (a.color == 1 && b.color == 1 && c.color == 1))
+                         (a.color == 1 && d.color == 1 && c.color == 1))
                 {
                     Debug.Log("Possible loss by Silver on Board");
                     lossCondition[0] = 1;
@@ -1102,7 +1102,7 @@ Extra Necessary Functions
                 if ((a.height == 0 && b.height == 0 && c.height == 0) ||
                    (b.height == 0 && c.height == 0 && d.height == 0) ||
                    (a.height == 0 && b.height == 0 && d.height == 0) ||
-                   (a.height == 0 && b.height == 0 && c.height == 0))
+                   (a.height == 0 && d.height == 0 && c.height == 0))
                 {
                     Debug.Log("Possible loss by Short on Board");
                     lossCondition[1] = 0;
@@ -1111,7 +1111,7 @@ Extra Necessary Functions
                 else if ((a.height == 1 && b.height == 1 && c.height == 1) ||
                          (b.height == 1 && c.height == 1 && d.height == 1) ||
                          (a.height == 1 && b.height == 1 && d.height == 1) ||
-                         (a.height == 1 && b.height == 1 && c.height == 1))
+                         (a.height == 1 && d.height == 1 && c.height == 1))
                 {
                     Debug.Log("Possible loss by Tall on Board");
                     lossCondition[1] = 1;
@@ -1128,7 +1128,7 @@ Extra Necessary Functions
                 if ((a.shape == 0 && b.shape == 0 && c.shape == 0) ||
                    (b.shape == 0 && c.shape == 0 && d.shape == 0) ||
                    (a.shape == 0 && b.shape == 0 && d.shape == 0) ||
-                   (a.shape == 0 && b.shape == 0 && c.shape == 0))
+                   (a.shape == 0 && d.shape == 0 && c.shape == 0))
                 {
                     Debug.Log("Possible loss by Round on Board");
                     lossCondition[2] = 0;
@@ -1137,7 +1137,7 @@ Extra Necessary Functions
                 else if ((a.shape == 1 && b.shape == 1 && c.shape == 1) ||
                          (b.shape == 1 && c.shape == 1 && d.shape == 1) ||
                          (a.shape == 1 && b.shape == 1 && d.shape == 1) ||
-                         (a.shape == 1 && b.shape == 1 && c.shape == 1))
+                         (a.shape == 1 && d.shape == 1 && c.shape == 1))
                 {
                     Debug.Log("Possible loss by Triangle on Board");
                     lossCondition[2] = 1;
@@ -1154,7 +1154,7 @@ Extra Necessary Functions
                 if ((a.emblem == 0 && b.emblem == 0 && c.emblem == 0) ||
                    (b.emblem == 0 && c.emblem == 0 && d.emblem == 0) ||
                    (a.emblem == 0 && b.emblem == 0 && d.emblem == 0) ||
-                   (a.emblem == 0 && b.emblem == 0 && c.emblem == 0))
+                   (a.emblem == 0 && d.emblem == 0 && c.emblem == 0))
                 {
                     Debug.Log("Possible loss by No Emblem on Board");
                     lossCondition[3] = 0;
@@ -1163,7 +1163,7 @@ Extra Necessary Functions
                 else if ((a.emblem == 1 && b.emblem == 1 && c.emblem == 1) ||
                          (b.emblem == 1 && c.emblem == 1 && d.emblem == 1) ||
                          (a.emblem == 1 && b.emblem == 1 && d.emblem == 1) ||
-                         (a.emblem == 1 && b.emblem == 1 && c.emblem == 1))
+                         (a.emblem == 1 && d.emblem == 1 && c.emblem == 1))
                 {
                     Debug.Log("Possible loss by Emblem on Board");
                     lossCondition[3] = 1;
