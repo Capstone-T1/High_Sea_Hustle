@@ -100,6 +100,16 @@ public class StartRoom : MonoBehaviourPunCallbacks, ILobbyCallbacks
             StartButton.gameObject.SetActive(false);
     }
 
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        base.OnJoinedLobby();
+    }
+
     #endregion
 
     #region Functions
@@ -115,7 +125,7 @@ public class StartRoom : MonoBehaviourPunCallbacks, ILobbyCallbacks
         };
 
         // Room name needs to be player name???
-        roomName = Random.Range(0, 10000).ToString();
+        roomName = GameInfo.username;
         PhotonNetwork.CreateRoom(roomName, roomOps);
     }
 
@@ -149,17 +159,10 @@ public class StartRoom : MonoBehaviourPunCallbacks, ILobbyCallbacks
     {
         Debug.Log("F: StartRoom.cs/ public void OnCreateGameButtonClicked - Create button clicked");
 
-        while (!PhotonNetwork.IsConnectedAndReady)
-            LoadingCanvas.gameObject.SetActive(true);
-
-        LoadingCanvas.gameObject.SetActive(false);
-
         CreateRoom();
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
-            Debug.Log("You are master client");
-
-        
+            Debug.Log("You are master client");        
 
         GameInfo.selectPieceAtStart = 1;
     }
