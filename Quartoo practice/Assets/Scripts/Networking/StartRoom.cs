@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartRoom : MonoBehaviourPunCallbacks, ILobbyCallbacks
 {
@@ -12,18 +13,17 @@ public class StartRoom : MonoBehaviourPunCallbacks, ILobbyCallbacks
     public GameObject CreateGameButton;
     public GameObject JoinGameButton;
     public GameObject BackButton;
-    public GameObject StartGameButton;
     public GameObject FindGamesButton;
     public GameObject roomListingPrefab;
     public GameObject roomListingPanel;
+    public GameObject StartButton;
 
     public Canvas CreateOrJoinCanvas;
     public Canvas RoomLobbyCanvas;
     public Canvas WaitingLoadingCanvas;
     public Canvas LoadingCanvas;
 
-    public GameObject StatusText;
-    public GameObject StartButton;
+    public Text StatusText;
     
     public Transform roomsPanel;
 
@@ -83,7 +83,11 @@ public class StartRoom : MonoBehaviourPunCallbacks, ILobbyCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            Debug.Log("Two players connected, ready to start");
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                StatusText.text = "Player joined, ready to Start Game...";
+                StartButton.SetActive(true);
+            }
         }
     }
 
@@ -93,11 +97,12 @@ public class StartRoom : MonoBehaviourPunCallbacks, ILobbyCallbacks
         RoomLobbyCanvas.gameObject.SetActive(false);
 
         WaitingLoadingCanvas.gameObject.SetActive(true);
+        if (!PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            StatusText.text = "Connected to room, waiting for host to start game...";
+        }
 
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-            StartButton.gameObject.SetActive(true);
-        else
-            StartButton.gameObject.SetActive(false);
+        StartButton.gameObject.SetActive(false);
     }
 
     public override void OnCreatedRoom()
@@ -220,23 +225,23 @@ public class StartRoom : MonoBehaviourPunCallbacks, ILobbyCallbacks
         }
     }
 
-    public void OnStartGameButtonClicked()
-    {
-        RoomLobbyCanvas.gameObject.SetActive(false);
-        WaitingLoadingCanvas.gameObject.SetActive(true);
+    //public void OnStartGameButtonClicked()
+    //{
+    //    RoomLobbyCanvas.gameObject.SetActive(false);
+    //    WaitingLoadingCanvas.gameObject.SetActive(true);
 
-        if (!PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            StartButton.gameObject.SetActive(false);
-        }
-        else
-        { 
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
-            {
-                StartButton.gameObject.SetActive(true);
-            }
-        }
-    }
+    //    if (!PhotonNetwork.LocalPlayer.IsMasterClient)
+    //    {
+    //        StartButton.gameObject.SetActive(false);
+    //    }
+    //    else
+    //    { 
+    //        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+    //        {
+    //            StartButton.gameObject.SetActive(true);
+    //        }
+    //    }
+    //}
 
     public void OnStartButtonClicked()
     {
