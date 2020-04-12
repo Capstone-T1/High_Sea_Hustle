@@ -288,7 +288,7 @@ public class AIHard
 
         foreach (GameCore.Piece a in availablePieces)
             viablePieces.Add(a);
-
+        
         //Check for check for possible loss
         if (availablePieces.Count < 14)
         {
@@ -304,49 +304,73 @@ public class AIHard
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].color == 0)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     else if (loss[0] == 1)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].color == 1)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     if (loss[1] == 0)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].height == 0)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     else if (loss[1] == 1)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].height == 1)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     if (loss[2] == 0)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].shape == 0)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     else if (loss[2] == 1)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].shape == 1)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     if (loss[3] == 0)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].emblem == 0)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     else if (loss[3] == 1)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].emblem == 1)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                 }
             }
@@ -364,156 +388,228 @@ public class AIHard
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].color == 0)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     else if (loss[0] == 1)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].color == 1)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     if (loss[1] == 0)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].height == 0)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     else if (loss[1] == 1)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].height == 1)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     if (loss[2] == 0)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].shape == 0)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     else if (loss[2] == 1)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].shape == 1)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     if (loss[3] == 0)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].emblem == 0)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                     else if (loss[3] == 1)
                     {
                         for (int a = 0; a < viablePieces.Count; a++)
                             if (viablePieces[a].emblem == 1)
+                            {
                                 viablePieces.Remove(viablePieces[a]);
+                                a--;
+                            }
                     }
                 }
             }
 
             loss = CheckLossConditions(AITempBoard[0][0], AITempBoard[1][1], AITempBoard[2][2], AITempBoard[3][3]);
-        if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+            if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
             {
                 if (loss[0] == 0)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].color == 0)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 else if (loss[0] == 1)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].color == 1)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 if (loss[1] == 0)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].height == 0)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 else if (loss[1] == 1)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].height == 1)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 if (loss[2] == 0)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].shape == 0)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 else if (loss[2] == 1)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].shape == 1)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 if (loss[3] == 0)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].emblem == 0)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 else if (loss[3] == 1)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].emblem == 1)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
             }
 
             loss = CheckLossConditions(AITempBoard[0][3], AITempBoard[1][2], AITempBoard[2][1], AITempBoard[3][0]);
-        if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+            if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
             {
                 if (loss[0] == 0)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].color == 0)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 else if (loss[0] == 1)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].color == 1)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 if (loss[1] == 0)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].height == 0)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 else if (loss[1] == 1)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].height == 1)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 if (loss[2] == 0)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].shape == 0)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 else if (loss[2] == 1)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].shape == 1)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 if (loss[3] == 0)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].emblem == 0)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
                 else if (loss[3] == 1)
                 {
                     for (int a = 0; a < viablePieces.Count; a++)
                         if (viablePieces[a].emblem == 1)
+                        {
                             viablePieces.Remove(viablePieces[a]);
+                            a--;
+                        }
                 }
             }
         }
@@ -1065,11 +1161,11 @@ Extra Necessary Functions
             (a.color != 2 && b.color != 2 && d.color != 2) ||
             (a.color != 2 && d.color != 2 && c.color != 2))
         {
-            //Checks Color (Checks 3/4 share condition && 1 of those 3 is not empty && at least 1/4 is empty)
-            if (((a.color == b.color && a.color == c.color) && (a.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((b.color == c.color && b.color == d.color) && (d.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((a.color == b.color && a.color == d.color) && (a.color != 2 || b.color != 2 || d.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((a.color == c.color && a.color == d.color) && (a.color != 2 || d.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
+            //Checks Color (Checks 3/4 share condition && at least 1/4 is empty)
+            if (((a.color == b.color && a.color == c.color) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((b.color == c.color && b.color == d.color) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.color == b.color && a.color == d.color) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.color == c.color && a.color == d.color) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
             {
                 //if Gold
                 if ((a.color == 0 && b.color == 0 && c.color == 0) ||
@@ -1092,26 +1188,25 @@ Extra Necessary Functions
             }
 
             //Checks Height
-            if (((a.height == b.height && a.height == c.height) && (a.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((b.height == c.height && b.height == d.height) && (d.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((a.height == b.height && a.height == d.height) && (a.color != 2 || b.color != 2 || d.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((a.height == c.height && a.height == d.height) && (a.color != 2 || d.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
-
+            if (((a.height == b.height && a.height == c.height) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((b.height == c.height && b.height == d.height) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.height == b.height && a.height == d.height) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.height == c.height && a.height == d.height) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
             {
                 //If Short
                 if ((a.height == 0 && b.height == 0 && c.height == 0) ||
-                   (b.height == 0 && c.height == 0 && d.height == 0) ||
-                   (a.height == 0 && b.height == 0 && d.height == 0) ||
-                   (a.height == 0 && d.height == 0 && c.height == 0))
+                    (b.height == 0 && c.height == 0 && d.height == 0) ||
+                    (a.height == 0 && b.height == 0 && d.height == 0) ||
+                    (a.height == 0 && d.height == 0 && c.height == 0))
                 {
                     Debug.Log("Possible loss by Short on Board");
                     lossCondition[1] = 0;
                 }
                 //If Tall
                 else if ((a.height == 1 && b.height == 1 && c.height == 1) ||
-                         (b.height == 1 && c.height == 1 && d.height == 1) ||
-                         (a.height == 1 && b.height == 1 && d.height == 1) ||
-                         (a.height == 1 && d.height == 1 && c.height == 1))
+                            (b.height == 1 && c.height == 1 && d.height == 1) ||
+                            (a.height == 1 && b.height == 1 && d.height == 1) ||
+                            (a.height == 1 && d.height == 1 && c.height == 1))
                 {
                     Debug.Log("Possible loss by Tall on Board");
                     lossCondition[1] = 1;
@@ -1119,51 +1214,50 @@ Extra Necessary Functions
             }
 
             //Checks Shape
-            if (((a.shape == b.shape && a.shape == c.shape) && (a.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((b.shape == c.shape && b.shape == d.shape) && (d.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((a.shape == b.shape && a.shape == d.shape) && (a.color != 2 || b.color != 2 || d.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((a.shape == c.shape && a.shape == d.shape) && (a.color != 2 || d.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
+            if (((a.shape == b.shape && a.shape == c.shape) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((b.shape == c.shape && b.shape == d.shape) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.shape == b.shape && a.shape == d.shape) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.shape == c.shape && a.shape == d.shape) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
             {
                 //If Round
                 if ((a.shape == 0 && b.shape == 0 && c.shape == 0) ||
-                   (b.shape == 0 && c.shape == 0 && d.shape == 0) ||
-                   (a.shape == 0 && b.shape == 0 && d.shape == 0) ||
-                   (a.shape == 0 && d.shape == 0 && c.shape == 0))
+                    (b.shape == 0 && c.shape == 0 && d.shape == 0) ||
+                    (a.shape == 0 && b.shape == 0 && d.shape == 0) ||
+                    (a.shape == 0 && d.shape == 0 && c.shape == 0))
                 {
                     Debug.Log("Possible loss by Round on Board");
                     lossCondition[2] = 0;
                 }
                 //If Triangle
                 else if ((a.shape == 1 && b.shape == 1 && c.shape == 1) ||
-                         (b.shape == 1 && c.shape == 1 && d.shape == 1) ||
-                         (a.shape == 1 && b.shape == 1 && d.shape == 1) ||
-                         (a.shape == 1 && d.shape == 1 && c.shape == 1))
+                            (b.shape == 1 && c.shape == 1 && d.shape == 1) ||
+                            (a.shape == 1 && b.shape == 1 && d.shape == 1) ||
+                            (a.shape == 1 && d.shape == 1 && c.shape == 1))
                 {
                     Debug.Log("Possible loss by Triangle on Board");
                     lossCondition[2] = 1;
                 }
             }
-
-            //Checks Emblem
-            if (((a.emblem == b.emblem && a.emblem == c.emblem) && (a.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((b.emblem == c.emblem && b.emblem == d.emblem) && (d.color != 2 || b.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((a.emblem == b.emblem && a.emblem == d.emblem) && (a.color != 2 || b.color != 2 || d.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
-                ((a.emblem == c.emblem && a.emblem == d.emblem) && (a.color != 2 || d.color != 2 || c.color != 2) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
+                //Checks Emblem
+            if (((a.emblem == b.emblem && a.emblem == c.emblem) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((b.emblem == c.emblem && b.emblem == d.emblem) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.emblem == b.emblem && a.emblem == d.emblem) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
+                ((a.emblem == c.emblem && a.emblem == d.emblem) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
             {
                 //If No Emblem
                 if ((a.emblem == 0 && b.emblem == 0 && c.emblem == 0) ||
-                   (b.emblem == 0 && c.emblem == 0 && d.emblem == 0) ||
-                   (a.emblem == 0 && b.emblem == 0 && d.emblem == 0) ||
-                   (a.emblem == 0 && d.emblem == 0 && c.emblem == 0))
+                    (b.emblem == 0 && c.emblem == 0 && d.emblem == 0) ||
+                    (a.emblem == 0 && b.emblem == 0 && d.emblem == 0) ||
+                    (a.emblem == 0 && d.emblem == 0 && c.emblem == 0))
                 {
                     Debug.Log("Possible loss by No Emblem on Board");
                     lossCondition[3] = 0;
                 }
                 //If Emblem
                 else if ((a.emblem == 1 && b.emblem == 1 && c.emblem == 1) ||
-                         (b.emblem == 1 && c.emblem == 1 && d.emblem == 1) ||
-                         (a.emblem == 1 && b.emblem == 1 && d.emblem == 1) ||
-                         (a.emblem == 1 && d.emblem == 1 && c.emblem == 1))
+                            (b.emblem == 1 && c.emblem == 1 && d.emblem == 1) ||
+                            (a.emblem == 1 && b.emblem == 1 && d.emblem == 1) ||
+                            (a.emblem == 1 && d.emblem == 1 && c.emblem == 1))
                 {
                     Debug.Log("Possible loss by Emblem on Board");
                     lossCondition[3] = 1;
