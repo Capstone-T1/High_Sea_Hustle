@@ -38,10 +38,10 @@ public class GameCore : MonoBehaviour
 
     // Initialize GameBoard with empty slots
     public Piece[][] gameBoard = new Piece[4][] {
-            new Piece[] {new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, "")},
-            new Piece[] {new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, "")},
-            new Piece[] {new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, "")},
-            new Piece[] {new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, ""), new Piece(2, 2, 2, 2, "")}
+            new Piece[] {new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, "")},
+            new Piece[] {new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, "")},
+            new Piece[] {new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, "")},
+            new Piece[] {new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, ""), new Piece(2, 0, 0, 0, "") }
     };
 
     // NOTE: may not need this list

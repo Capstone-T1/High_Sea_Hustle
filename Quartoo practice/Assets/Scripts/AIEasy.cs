@@ -249,7 +249,7 @@ public class AIEasy
 
         GameCore.Piece chosenPiece = pieceAIPlaced;
         List<GameCore.Piece> viablePieces = new List<GameCore.Piece>();
-        GameCore.Piece[][] AITempBoard = gameCore.GetGameBoard();
+        GameCore.Piece[][] AITempBoard = ConvertGameBoard(gameCore.GetGameBoard());
 
         foreach (GameCore.Piece a in availablePieces)
             viablePieces.Add(a);
@@ -1136,7 +1136,7 @@ Extra Necessary Functions
     public string CheckForWinPosition(GameCore.Piece givenPiece, List<GameCore.BoardSpace> availableSpaces)
     {
         string winningPosition = null;
-        GameCore.Piece[][] AITempBoard = gameCore.GetGameBoard();
+        GameCore.Piece[][] AITempBoard = ConvertGameBoard(gameCore.GetGameBoard());
         List<GameCore.BoardSpace> tempList = availableSpaces;
 
         for (int i = 0; i < (tempList.Count - 1); i++)
@@ -1224,7 +1224,7 @@ Extra Necessary Functions
             }
 
             //Resetting Location
-            AITempBoard[tempList[i].row][tempList[i].col] = new GameCore.Piece(2, 0, 0, 0, "");
+            AITempBoard[tempList[i].row][tempList[i].col] = new GameCore.Piece(2, 2, 2, 2, "");
         }
 
         return winningPosition;
@@ -1413,5 +1413,21 @@ Extra Necessary Functions
                 convertedGamePiece = piece;
 
         return convertedGamePiece;
+    }
+
+    public GameCore.Piece[][] ConvertGameBoard(GameCore.Piece[][] gameBoard)
+    {
+        for (int i = 0; i < gameBoard.Length; i++)
+            for (int j = 0; j < 4; j++)
+            {
+                if (gameBoard[i][j].color == 2)
+                {
+                    gameBoard[i][j].height = 2;
+                    gameBoard[i][j].shape = 2;
+                    gameBoard[i][j].emblem = 2;
+                }
+            }
+
+        return gameBoard;
     }
 }
