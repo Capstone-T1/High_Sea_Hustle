@@ -38,10 +38,21 @@ public class AIHard
         if (numOfAvailablePositions <= 13)
         {
             //Check to see if peice given leads to win
-            string winningLocation = CheckForWinPosition(pieceGivenToAI, availableBoardSpaces);
-            if (winningLocation != null)
+            string possibleLocation = CheckForWinPosition(pieceGivenToAI, availableBoardSpaces);
+            if (possibleLocation != null)
             {
-                chosenLocationString = winningLocation;
+                chosenLocationString = possibleLocation;
+
+                stopWatch.Stop();
+                Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
+
+                return chosenLocationString;
+            }
+
+            possibleLocation = CheckForLossPosition(pieceGivenToAI, availableBoardSpaces);
+            if (possibleLocation != null)
+            {
+                chosenLocationString = possibleLocation;
 
                 stopWatch.Stop();
                 Debug.Log("Debug: ChooseLocation - " + stopWatch.Elapsed);
@@ -1139,6 +1150,122 @@ Extra Necessary Functions
         return winningPosition;
     }
 
+    public string CheckForLossPosition(GameCore.Piece givenPiece, List<GameCore.BoardSpace> availableSpaces)
+    {
+        int[] loss = new int[4]{2, 2, 2, 2};
+        string losingPosition = null;
+        GameCore.Piece[][] AITempBoard = ConvertGameBoard(gameCore.GetGameBoard());
+        List<GameCore.BoardSpace> tempList = availableSpaces;
+
+        for (int i = 0; i < (tempList.Count - 1); i++)
+        {
+            AITempBoard[tempList[i].row][tempList[i].col] = givenPiece;
+
+            //check the rows
+            switch (tempList[i].row)
+            {
+                case 0:
+                    loss = CheckPossibleLossConditions(AITempBoard[0][0], AITempBoard[0][1], AITempBoard[0][2], AITempBoard[0][3]);
+                    if(loss[0] != 2 || loss[1] != 2|| loss[2] != 2 || loss[3] != 2)
+                    {
+                        losingPosition = tempList[i].id;
+                        return losingPosition;
+                    }
+                    break;
+                case 1:
+                    loss = CheckPossibleLossConditions(AITempBoard[1][0], AITempBoard[1][1], AITempBoard[1][2], AITempBoard[1][3]);
+                    if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                    {
+                        losingPosition = tempList[i].id;
+                        return losingPosition;
+                    }
+                    break;
+                case 2:
+                    loss = CheckPossibleLossConditions(AITempBoard[2][0], AITempBoard[2][1], AITempBoard[2][2], AITempBoard[2][3]);
+                    if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                    {
+                        losingPosition = tempList[i].id;
+                        return losingPosition;
+                    }
+                    break;
+                case 3:
+                    loss = CheckPossibleLossConditions(AITempBoard[3][0], AITempBoard[3][1], AITempBoard[3][2], AITempBoard[3][3]);
+                    if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                    {
+                        losingPosition = tempList[i].id;
+                        return losingPosition;
+                    }
+                    break;
+            }
+
+            // checks the rows
+            switch (tempList[i].col)
+            {
+                case 0:
+                    loss = CheckPossibleLossConditions(AITempBoard[0][0], AITempBoard[1][0], AITempBoard[2][0], AITempBoard[3][0]);
+                    if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                    {
+                        losingPosition = tempList[i].id;
+                        return losingPosition;
+                    }
+                    break;
+                case 1:
+                    loss = CheckPossibleLossConditions(AITempBoard[0][1], AITempBoard[1][1], AITempBoard[2][1], AITempBoard[3][0]);
+                    if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                    {
+                        losingPosition = tempList[i].id;
+                        return losingPosition;
+                    }
+                    break;
+                case 2:
+                    loss = CheckPossibleLossConditions(AITempBoard[0][2], AITempBoard[1][2], AITempBoard[2][2], AITempBoard[3][2]);
+                    if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                    {
+                        losingPosition = tempList[i].id;
+                        return losingPosition;
+                    }
+                    break;
+                case 3:
+                    loss = CheckPossibleLossConditions(AITempBoard[0][3], AITempBoard[1][3], AITempBoard[2][3], AITempBoard[3][3]);
+                    if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                    {
+                        losingPosition = tempList[i].id;
+                        return losingPosition;
+                    }
+                    break;
+            }
+
+            // checks the main diagonal (left to right)
+            loss = CheckPossibleLossConditions(AITempBoard[0][0], AITempBoard[1][1], AITempBoard[2][2], AITempBoard[3][3]);
+            if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                if ((tempList[i].row == 0 && tempList[i].col == 0) ||
+                    (tempList[i].row == 1 && tempList[i].col == 1) ||
+                    (tempList[i].row == 2 && tempList[i].col == 2) ||
+                    (tempList[i].row == 3 && tempList[i].col == 3))
+                {
+                    losingPosition = tempList[i].id;
+                    return losingPosition;
+                }
+
+            //// checks the secondary diagonal (right to left)
+            loss = CheckPossibleLossConditions(AITempBoard[0][3], AITempBoard[1][2], AITempBoard[2][1], AITempBoard[3][0]);
+            if (loss[0] != 2 || loss[1] != 2 || loss[2] != 2 || loss[3] != 2)
+                if((tempList[i].row == 0 && tempList[i].col == 3) ||
+                   (tempList[i].row == 1 && tempList[i].col == 2) ||
+                   (tempList[i].row == 2 && tempList[i].col == 1) ||
+                   (tempList[i].row == 3 && tempList[i].col == 0))
+                {
+                    losingPosition = tempList[i].id;
+                    return losingPosition;
+                }
+
+            //Resetting Location
+            AITempBoard[tempList[i].row][tempList[i].col] = new GameCore.Piece(2, 2, 2, 2, "");
+        }
+
+        return losingPosition;
+    }
+
     private int[] CheckLossConditions(GameCore.Piece a, GameCore.Piece b, GameCore.Piece c, GameCore.Piece d)
     {
         int[] lossCondition = new int[4] { 2, 2, 2, 2 };
@@ -1243,6 +1370,135 @@ Extra Necessary Functions
                 ((b.emblem == c.emblem && b.emblem == d.emblem) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
                 ((a.emblem == b.emblem && a.emblem == d.emblem) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)) ||
                 ((a.emblem == c.emblem && a.emblem == d.emblem) && !(a.color != 2 && b.color != 2 && c.color != 2 && d.color != 2)))
+            {
+                //If No Emblem
+                if ((a.emblem == 0 && b.emblem == 0 && c.emblem == 0) ||
+                    (b.emblem == 0 && c.emblem == 0 && d.emblem == 0) ||
+                    (a.emblem == 0 && b.emblem == 0 && d.emblem == 0) ||
+                    (a.emblem == 0 && d.emblem == 0 && c.emblem == 0))
+                {
+                    Debug.Log("Possible loss by No Emblem on Board");
+                    lossCondition[3] = 0;
+                }
+                //If Emblem
+                else if ((a.emblem == 1 && b.emblem == 1 && c.emblem == 1) ||
+                            (b.emblem == 1 && c.emblem == 1 && d.emblem == 1) ||
+                            (a.emblem == 1 && b.emblem == 1 && d.emblem == 1) ||
+                            (a.emblem == 1 && d.emblem == 1 && c.emblem == 1))
+                {
+                    Debug.Log("Possible loss by Emblem on Board");
+                    lossCondition[3] = 1;
+                }
+            }
+        }
+        // if there arent any conditions met, that means that there isn't a winner
+        return lossCondition;
+    }
+
+    private int[] CheckPossibleLossConditions(GameCore.Piece a, GameCore.Piece b, GameCore.Piece c, GameCore.Piece d)
+    {
+        int[] lossCondition = new int[4] { 2, 2, 2, 2 };
+        /*
+          Possible Results:
+          None = lossCondition {2,2,2,2}
+          Gold - lossCondition[0] = 0
+          Silver - lossCondition[0] = 1
+          Short - lossCondition[1] = 0
+          Tall - lossCondition[1] = 1
+          Round - lossCondition[2] = 0
+          Triangle - lossCondition[2] = 1
+          No Emblem - lossCondition[3] = 0
+          Emblem - lossCondition[3] = 1
+        */
+
+        //Checks if at least three of them have a piece at location
+        if ((a.color != 2 && b.color != 2 && c.color != 2) ||
+            (d.color != 2 && b.color != 2 && c.color != 2) ||
+            (a.color != 2 && b.color != 2 && d.color != 2) ||
+            (a.color != 2 && d.color != 2 && c.color != 2))
+        {
+            //Checks Color (Checks 3/4 share condition && at least 1/4 is empty)
+            if ((a.color == b.color && a.color == c.color) ||
+                (b.color == c.color && b.color == d.color) ||
+                (a.color == b.color && a.color == d.color) ||
+                (a.color == c.color && a.color == d.color))
+            {
+                //if Gold
+                if ((a.color == 0 && b.color == 0 && c.color == 0) ||
+                   (b.color == 0 && c.color == 0 && d.color == 0) ||
+                   (a.color == 0 && b.color == 0 && d.color == 0) ||
+                   (a.color == 0 && d.color == 0 && c.color == 0))
+                {
+                    Debug.Log("Possible loss by Gold on Board");
+                    lossCondition[0] = 0;
+                }
+                //If Silver
+                else if ((a.color == 1 && b.color == 1 && c.color == 1) ||
+                         (b.color == 1 && c.color == 1 && d.color == 1) ||
+                         (a.color == 1 && b.color == 1 && d.color == 1) ||
+                         (a.color == 1 && d.color == 1 && c.color == 1))
+                {
+                    Debug.Log("Possible loss by Silver on Board");
+                    lossCondition[0] = 1;
+                }
+            }
+
+            //Checks Height
+            if ((a.height == b.height && a.height == c.height) ||
+                (b.height == c.height && b.height == d.height) ||
+                (a.height == b.height && a.height == d.height) ||
+                (a.height == c.height && a.height == d.height))
+            {
+                //If Short
+                if ((a.height == 0 && b.height == 0 && c.height == 0) ||
+                    (b.height == 0 && c.height == 0 && d.height == 0) ||
+                    (a.height == 0 && b.height == 0 && d.height == 0) ||
+                    (a.height == 0 && d.height == 0 && c.height == 0))
+                {
+                    Debug.Log("Possible loss by Short on Board");
+                    lossCondition[1] = 0;
+                }
+                //If Tall
+                else if ((a.height == 1 && b.height == 1 && c.height == 1) ||
+                            (b.height == 1 && c.height == 1 && d.height == 1) ||
+                            (a.height == 1 && b.height == 1 && d.height == 1) ||
+                            (a.height == 1 && d.height == 1 && c.height == 1))
+                {
+                    Debug.Log("Possible loss by Tall on Board");
+                    lossCondition[1] = 1;
+                }
+            }
+
+            //Checks Shape
+            if ((a.shape == b.shape && a.shape == c.shape) ||
+                (b.shape == c.shape && b.shape == d.shape) ||
+                (a.shape == b.shape && a.shape == d.shape) ||
+                (a.shape == c.shape && a.shape == d.shape))
+            {
+                //If Round
+                if ((a.shape == 0 && b.shape == 0 && c.shape == 0) ||
+                    (b.shape == 0 && c.shape == 0 && d.shape == 0) ||
+                    (a.shape == 0 && b.shape == 0 && d.shape == 0) ||
+                    (a.shape == 0 && d.shape == 0 && c.shape == 0))
+                {
+                    Debug.Log("Possible loss by Round on Board");
+                    lossCondition[2] = 0;
+                }
+                //If Triangle
+                else if ((a.shape == 1 && b.shape == 1 && c.shape == 1) ||
+                            (b.shape == 1 && c.shape == 1 && d.shape == 1) ||
+                            (a.shape == 1 && b.shape == 1 && d.shape == 1) ||
+                            (a.shape == 1 && d.shape == 1 && c.shape == 1))
+                {
+                    Debug.Log("Possible loss by Triangle on Board");
+                    lossCondition[2] = 1;
+                }
+            }
+            //Checks Emblem
+            if ((a.emblem == b.emblem && a.emblem == c.emblem) ||
+                (b.emblem == c.emblem && b.emblem == d.emblem) ||
+                (a.emblem == b.emblem && a.emblem == d.emblem) ||
+                (a.emblem == c.emblem && a.emblem == d.emblem))
             {
                 //If No Emblem
                 if ((a.emblem == 0 && b.emblem == 0 && c.emblem == 0) ||
