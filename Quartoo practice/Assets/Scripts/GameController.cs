@@ -556,13 +556,21 @@ public class GameController : MonoBehaviour
     public void StagePiece()
     {
         Button StagePiece = GameObject.Find("StagePiece").GetComponent<Button>();
-
+        Button opponentStagePiece = GameObject.Find("OpponentStagePiece").GetComponent<Button>();
+        
         if (GameInfo.doubleClickConfirm == true)
             selectedPiece.transform.GetChild(0).gameObject.SetActive(false);
 
-        Vector3 newPosition = StagePiece.transform.position;
-        selectedPiece.transform.position = newPosition;
-
+        if (playerTurn == 2)
+        {
+            Vector3 newPosition = StagePiece.transform.position;
+            selectedPiece.transform.position = newPosition;
+        }
+        else
+        {
+            Vector3 newPosition = opponentStagePiece.transform.position;
+            selectedPiece.transform.position = newPosition;
+        }
     }
 
     public void SelectOpponentsPiece()
