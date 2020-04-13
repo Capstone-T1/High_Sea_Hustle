@@ -529,7 +529,9 @@ public class GameController : MonoBehaviour
             RemoveHighlightBoardspace();
             selectedPiece.GetComponent<BoxCollider2D>().enabled = false;
             Vector3 newPosition = button.transform.position;
-            selectedPiece.transform.position = newPosition;
+            GameObject gamePiece = GameObject.Find("GamePiece " + selectedPiece.id);
+            iTween.MoveTo(gamePiece, newPosition, 2);
+           // selectedPiece.transform.position = newPosition;
             recentMove = button;
             button.interactable = false;
 
