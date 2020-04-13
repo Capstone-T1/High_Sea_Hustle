@@ -14,6 +14,13 @@ public class SplashControl : MonoBehaviour
         StartCoroutine(myStart());
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Initiate.Fade("MainMenu", Color.black, 4.0f);
+        }
+    }
 
     IEnumerator myStart()
     {
