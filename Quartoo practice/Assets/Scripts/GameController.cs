@@ -570,12 +570,27 @@ public class GameController : MonoBehaviour
         if (playerTurn == 2)
         {
             Vector3 newPosition = StagePiece.transform.position;
-            selectedPiece.transform.position = newPosition;
+            GameObject gamePiece = GameObject.Find("GamePiece " + selectedPiece.id);
+            Hashtable pieceAnimationArgs = new Hashtable()
+            {
+                {"position", newPosition},
+                {"time", 1.5f}
+            };
+
+            iTween.MoveTo(gamePiece, pieceAnimationArgs);
+
         }
         else
         {
             Vector3 newPosition = opponentStagePiece.transform.position;
-            selectedPiece.transform.position = newPosition;
+            GameObject gamePiece = GameObject.Find("GamePiece " + selectedPiece.id);
+            Hashtable pieceAnimationArgs = new Hashtable()
+            {
+                {"position", newPosition},
+                {"time", 1.5f}
+            };
+
+            iTween.MoveTo(gamePiece, pieceAnimationArgs);
         }
     }
 
