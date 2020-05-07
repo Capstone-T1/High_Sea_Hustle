@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        if (GameInfo.firstGame)
+        if (GameInfo.firstGame && GameInfo.gameType != 'T')
         {
             tooltips = ParretPopup.GetComponent<Tooltips>();
             StartCoroutine("FirstGameTooltip");
